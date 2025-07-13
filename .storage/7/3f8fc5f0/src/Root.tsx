@@ -7,7 +7,10 @@ import { SocialStory } from "./templates/SocialStory";
 import { MarketingPromo } from "./templates/MarketingPromo";
 import { EducationalTemplate } from "./templates/EducationalTemplate";
 import { CelebrationTemplate } from "./templates/CelebrationTemplate";
+import { PodcastTemplate } from "./templates/PodcastTemplate";
+import { GamingTemplate } from "./templates/GamingTemplate";
 import { TemplateSelector } from "./components/TemplateSelector";
+import { StudioInterface } from "./components/StudioInterface";
 
 // مكونات القوالب
 const templateComponents = {
@@ -17,11 +20,24 @@ const templateComponents = {
   "marketing-promo": MarketingPromo,
   "educational-template": EducationalTemplate,
   "celebration-template": CelebrationTemplate,
+  "podcast-template": PodcastTemplate,
+  "gaming-template": GamingTemplate,
 };
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* الاستوديو الشامل */}
+      <Composition
+        id="StudioInterface"
+        component={StudioInterface}
+        durationInFrames={3600} // دقيقتان للاستكشاف
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
       {/* واجهة اختيار القوالب التفاعلية */}
       <Composition
         id="TemplateSelector"
@@ -85,7 +101,7 @@ export const RemotionRoot: React.FC = () => {
               },
               primaryColor: {
                 type: "string",
-                description: "اللون الأساسي",
+                description: "ال��ون الأساسي",
                 defaultValue:
                   template.customizableProps.colors?.primary || "#4338ca",
               },
