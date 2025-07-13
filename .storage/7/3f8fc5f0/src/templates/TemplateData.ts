@@ -225,6 +225,76 @@ export const videoTemplates: VideoTemplate[] = [
       },
     },
   },
+  {
+    id: "podcast-template",
+    name: "قالب البودكاست",
+    description: "قالب احترافي للبودكاست مع موجات صوتية تفاعلية ومؤثرات بصرية",
+    thumbnail: "/thumbnails/podcast.jpg",
+    category: "social",
+    tags: ["بودكاست", "صوت", "راديو", "مقابلات"],
+    difficulty: "intermediate",
+    duration: 480,
+    fps: 30,
+    width: 1920,
+    height: 1080,
+    customizableProps: {
+      text: {
+        title: "حلقة جديدة",
+        subtitle: "بودكاست مميز",
+        description: "استمع لأفضل المحتوى الصوتي",
+      },
+      colors: {
+        primary: "#9333ea",
+        secondary: "#c084fc",
+        background: "#581c87",
+      },
+      animations: {
+        style: "smooth",
+        speed: 1,
+      },
+      extras: {
+        podcastName: "بودكاست الإبداع",
+        episodeNumber: "الحلقة 15",
+        hostName: "المذيع المميز",
+        duration: "45 دقيقة",
+      },
+    },
+  },
+  {
+    id: "gaming-template",
+    name: "قالب الألعاب",
+    description: "قالب متطور للألعاب مع تأثيرات هولوجرام وجسيمات طاقة",
+    thumbnail: "/thumbnails/gaming.jpg",
+    category: "social",
+    tags: ["ألعاب", "إنجازات", "تقنية", "مستقبلي"],
+    difficulty: "advanced",
+    duration: 360,
+    fps: 30,
+    width: 1920,
+    height: 1080,
+    customizableProps: {
+      text: {
+        title: "مستوى جديد!",
+        subtitle: "إنجاز ملحمي",
+        description: "تجربة ألعاب لا تُنسى",
+      },
+      colors: {
+        primary: "#10b981",
+        secondary: "#34d399",
+        background: "#064e3b",
+      },
+      animations: {
+        style: "explosive",
+        speed: 1.5,
+      },
+      extras: {
+        gameName: "لعبة المغامرات",
+        playerName: "اللاعب البطل",
+        achievement: "إنجاز نادر",
+        level: "المستوى 50",
+      },
+    },
+  },
 ];
 
 export const templateCategories = [
