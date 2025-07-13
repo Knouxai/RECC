@@ -3,11 +3,19 @@ export interface VideoTemplate {
   name: string;
   description: string;
   thumbnail: string;
-  category: "business" | "social" | "artistic" | "marketing";
+  category:
+    | "business"
+    | "social"
+    | "artistic"
+    | "marketing"
+    | "educational"
+    | "celebration";
   duration: number;
   fps: number;
   width: number;
   height: number;
+  tags: string[];
+  difficulty: "beginner" | "intermediate" | "advanced";
   customizableProps: {
     text?: {
       title: string;
@@ -20,8 +28,11 @@ export interface VideoTemplate {
       background: string;
     };
     animations?: {
-      style: "smooth" | "dynamic" | "elegant";
+      style: "smooth" | "dynamic" | "elegant" | "explosive" | "educational";
       speed: number;
+    };
+    extras?: {
+      [key: string]: any;
     };
   };
 }
@@ -29,19 +40,22 @@ export interface VideoTemplate {
 export const videoTemplates: VideoTemplate[] = [
   {
     id: "artistic-portrait",
-    name: "Portrait Artistique",
-    description: "قالب فني لعرض الصور الشخصية بطريقة احترافية",
+    name: "البورتريه الفني",
+    description:
+      "قالب فني لعرض الصور الشخصية بطريقة احترافية مع تأثيرات بصرية رائعة",
     thumbnail: "/thumbnails/artistic-portrait.jpg",
     category: "artistic",
+    tags: ["فني", "صور شخصية", "احترافي", "إبداعي"],
+    difficulty: "intermediate",
     duration: 300,
     fps: 30,
     width: 1920,
     height: 1080,
     customizableProps: {
       text: {
-        title: "اسم الشخص",
-        subtitle: "المهنة أو الوصف",
-        description: "نبذة مختصرة",
+        title: "Portrait Artistique",
+        subtitle: "Création Professionnelle",
+        description: "Une œuvre d'art numérique unique",
       },
       colors: {
         primary: "#4338ca",
@@ -57,18 +71,20 @@ export const videoTemplates: VideoTemplate[] = [
   {
     id: "business-intro",
     name: "تقديم الأعمال",
-    description: "قالب مهني لتقديم الشركات والخدمات",
+    description: "قالب مهني لتقديم الشركات والخدمات بأسلوب احترافي وجذاب",
     thumbnail: "/thumbnails/business-intro.jpg",
     category: "business",
+    tags: ["شركات", "أعمال", "مهني", "تقديم"],
+    difficulty: "beginner",
     duration: 450,
     fps: 30,
     width: 1920,
     height: 1080,
     customizableProps: {
       text: {
-        title: "اسم الشركة",
-        subtitle: "الشعار",
-        description: "وصف الخدمات",
+        title: "شركة متميزة",
+        subtitle: "نحو النجاح والتطور",
+        description: "نقدم أفضل الحلول والخدمات المبتكرة",
       },
       colors: {
         primary: "#059669",
@@ -84,18 +100,20 @@ export const videoTemplates: VideoTemplate[] = [
   {
     id: "social-story",
     name: "قصة اجتماعية",
-    description: "قالب مثالي لوسائل التواصل الاجتماعي",
+    description: "قالب مثالي لوسائل التواصل الاجتماعي مع تأثيرات جذابة",
     thumbnail: "/thumbnails/social-story.jpg",
     category: "social",
+    tags: ["سوشيال ميديا", "قصص", "تفاعلي", "شبابي"],
+    difficulty: "beginner",
     duration: 180,
     fps: 30,
     width: 1080,
     height: 1920,
     customizableProps: {
       text: {
-        title: "العنوان الرئيسي",
-        subtitle: "العنوان الفرعي",
-        description: "المحتوى",
+        title: "قصة ملهمة",
+        subtitle: "اكتشف المزيد",
+        description: "محتوى رائع لوسائل التواصل",
       },
       colors: {
         primary: "#dc2626",
@@ -108,4 +126,119 @@ export const videoTemplates: VideoTemplate[] = [
       },
     },
   },
+  {
+    id: "marketing-promo",
+    name: "الإعلان التسويقي",
+    description: "قالب تسويقي قوي للعروض والخصومات مع تأثيرات انفجارية",
+    thumbnail: "/thumbnails/marketing-promo.jpg",
+    category: "marketing",
+    tags: ["تسويق", "إعلانات", "عروض", "خصومات"],
+    difficulty: "advanced",
+    duration: 240,
+    fps: 30,
+    width: 1920,
+    height: 1080,
+    customizableProps: {
+      text: {
+        title: "عرض خاص",
+        subtitle: "لفترة محدودة",
+        description: "اكتشف منتجاتنا المميزة",
+      },
+      colors: {
+        primary: "#f59e0b",
+        secondary: "#fbbf24",
+        background: "#78350f",
+      },
+      animations: {
+        style: "explosive",
+        speed: 1.5,
+      },
+      extras: {
+        discount: "50%",
+        ctaText: "اطلب الآن",
+      },
+    },
+  },
+  {
+    id: "educational-template",
+    name: "القالب التعليمي",
+    description: "قالب احترافي للدروس والمحتوى التعليمي مع بيئة تفاعلية",
+    thumbnail: "/thumbnails/educational.jpg",
+    category: "educational",
+    tags: ["تعليم", "دروس", "أكاديمي", "تربوي"],
+    difficulty: "intermediate",
+    duration: 360,
+    fps: 30,
+    width: 1920,
+    height: 1080,
+    customizableProps: {
+      text: {
+        title: "الدرس الأول",
+        subtitle: "أساسيات المادة",
+        description: "في هذا الدرس سنتعلم المفاهيم الأساسية",
+      },
+      colors: {
+        primary: "#3b82f6",
+        secondary: "#93c5fd",
+        background: "#1e3a8a",
+      },
+      animations: {
+        style: "educational",
+        speed: 1,
+      },
+      extras: {
+        lessonNumber: "01",
+        subject: "الرياضيات",
+      },
+    },
+  },
+  {
+    id: "celebration-template",
+    name: "قالب الاحتفال",
+    description: "قالب مليء بالفرح للمناسبات السعيدة والاحتفالات",
+    thumbnail: "/thumbnails/celebration.jpg",
+    category: "celebration",
+    tags: ["احتفال", "مناسبات", "أفراح", "تهاني"],
+    difficulty: "beginner",
+    duration: 300,
+    fps: 30,
+    width: 1920,
+    height: 1080,
+    customizableProps: {
+      text: {
+        title: "مبروك!",
+        subtitle: "يوم مميز",
+        description: "تهانينا في هذه المناسبة السعيدة",
+      },
+      colors: {
+        primary: "#ec4899",
+        secondary: "#f9a8d4",
+        background: "#831843",
+      },
+      animations: {
+        style: "dynamic",
+        speed: 1,
+      },
+      extras: {
+        occasion: "عيد ميلاد",
+        celebrationType: "birthday",
+      },
+    },
+  },
+];
+
+export const templateCategories = [
+  { id: "all", name: "جميع القوالب", icon: "🎬" },
+  { id: "business", name: "الأعمال", icon: "💼" },
+  { id: "social", name: "اجتماعي", icon: "📱" },
+  { id: "artistic", name: "فني", icon: "🎨" },
+  { id: "marketing", name: "تسويقي", icon: "📢" },
+  { id: "educational", name: "تعليمي", icon: "📚" },
+  { id: "celebration", name: "احتفالي", icon: "🎉" },
+];
+
+export const difficultyLevels = [
+  { id: "beginner", name: "مبتدئ", color: "#10b981" },
+  { id: "intermediate", name: "متوسط", color: "#f59e0b" },
+  { id: "advanced", name: "متقدم", color: "#ef4444" },
 ];
