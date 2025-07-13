@@ -4,20 +4,41 @@ import { videoTemplates } from "./templates/TemplateData";
 import { ArtisticPortrait } from "./templates/ArtisticPortrait";
 import { BusinessIntro } from "./templates/BusinessIntro";
 import { SocialStory } from "./templates/SocialStory";
+import { MarketingPromo } from "./templates/MarketingPromo";
+import { EducationalTemplate } from "./templates/EducationalTemplate";
+import { CelebrationTemplate } from "./templates/CelebrationTemplate";
+import { TemplateSelector } from "./components/TemplateSelector";
 
 // مكونات القوالب
 const templateComponents = {
   "artistic-portrait": ArtisticPortrait,
   "business-intro": BusinessIntro,
   "social-story": SocialStory,
+  "marketing-promo": MarketingPromo,
+  "educational-template": EducationalTemplate,
+  "celebration-template": CelebrationTemplate,
 };
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
+      {/* واجهة اختيار القوالب التفاعلية */}
+      <Composition
+        id="TemplateSelector"
+        component={TemplateSelector}
+        durationInFrames={1800} // 60 ثانية للاستكشاف
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{}}
+      />
+
+      {/* جميع القوالب المتاحة */}
       {videoTemplates.map((template) => {
         const TemplateComponent =
           templateComponents[template.id as keyof typeof templateComponents];
+
+        if (!TemplateComponent) return null;
 
         return (
           <Composition
@@ -41,6 +62,7 @@ export const RemotionRoot: React.FC = () => {
               backgroundColor:
                 template.customizableProps.colors?.background || "#1e1b4b",
               animationSpeed: template.customizableProps.animations?.speed || 1,
+              ...(template.customizableProps.extras || {}),
             }}
             schema={{
               title: {
@@ -87,10 +109,91 @@ export const RemotionRoot: React.FC = () => {
                 max: 3,
                 step: 0.1,
               },
+              // إضافة الخصائص الإضافية ديناميكياً
+              ...(template.customizableProps.extras
+                ? Object.fromEntries(
+                    Object.entries(template.customizableProps.extras).map(
+                      ([key, value]) => [
+                        key,
+                        {
+                          type: typeof value === "number" ? "number" : "string",
+                          description: key,
+                          defaultValue: value,
+                        },
+                      ],
+                    ),
+                  )
+                : {}),
             }}
           />
         );
       })}
+
+      {/* قوالب تجريبية إضافية */}
+      <Composition
+        id="ExperimentalTemplate"
+        component={ExperimentalTemplate}
+        durationInFrames={600}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{
+          message: "قالب تجريبي للاختبار",
+          intensity: 1,
+        }}
+        schema={{
+          message: {
+            type: "string",
+            description: "رسالة مخصصة",
+            defaultValue: "قالب تجريبي للاختبار",
+          },
+          intensity: {
+            type: "number",
+            description: "شدة التأثير",
+            defaultValue: 1,
+            min: 0.1,
+            max: 5,
+            step: 0.1,
+          },
+        }}
+      />
     </>
+  );
+};
+
+// قالب تجريبي للاختبار
+const ExperimentalTemplate: React.FC<{
+  message: string;
+  intensity: number;
+}> = ({ message, intensity }) => {
+  const { useCurrentFrame, interpolate, AbsoluteFill } = require("remotion");
+  const frame = useCurrentFrame();
+
+  const rotation = interpolate(frame, [0, 300], [0, 360 * intensity]);
+  const scale = 1 + Math.sin(frame * 0.1 * intensity) * 0.3;
+
+  return (
+    <AbsoluteFill
+      style={{
+        background: `hsl(${frame * 2}, 70%, 20%)`,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "Cairo, Arial, sans-serif",
+      }}
+    >
+      <div
+        style={{
+          fontSize: 80,
+          color: "white",
+          transform: `rotate(${rotation}deg) scale(${scale})`,
+          textAlign: "center",
+          textShadow: "0 0 30px rgba(255,255,255,0.5)",
+          direction: "rtl",
+        }}
+      >
+        {message}
+      </div>
+    </AbsoluteFill>
   );
 };
