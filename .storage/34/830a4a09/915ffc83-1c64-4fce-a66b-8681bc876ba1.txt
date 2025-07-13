@@ -1,0 +1,81 @@
+$ cd /workspace/remotion
+$ cd /workspace/remotion && pnpm run lint
+
+
+> remotion@1.0.0 lint /workspace/remotion
+> eslint src && tsc
+
+
+/workspace/remotion/src/KnouxRec.tsx
+  78:29  error  'setNotificationCount' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/workspace/remotion/src/Root.tsx
+  7:10  error  'z' is defined but never used  @typescript-eslint/no-unused-vars
+
+/workspace/remotion/src/components/FeatureCard.tsx
+  21:10  error  'isHovered' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/workspace/remotion/src/components/RecordingPanel.tsx
+  21:22  error  'setCurrentFps' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  22:20  error  'setCpuUsage' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  23:20  error  'setGpuUsage' is assigned a value but never used    @typescript-eslint/no-unused-vars
+
+/workspace/remotion/src/components/TemplatesToolbox.tsx
+  2:10  error  'FeatureCard' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 7 problems (7 errors, 0 warnings)
+
+ ELIFECYCLE  Command failed with exit code 1.
+$ cd /workspace/remotion && pnpm run lint
+
+
+> remotion@1.0.0 lint /workspace/remotion
+> eslint src && tsc
+
+
+/workspace/remotion/src/components/FeatureCard.tsx
+  1:17  error  'useState' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 1 problem (1 error, 0 warnings)
+
+ ELIFECYCLE  Command failed with exit code 1.
+$ cd /workspace/remotion && pnpm run lint
+
+
+> remotion@1.0.0 lint /workspace/remotion
+> eslint src && tsc
+
+$ cd /workspace/remotion && pnpm run lint
+
+
+> remotion@1.0.0 lint /workspace/remotion
+> eslint src && tsc
+
+
+/workspace/remotion/src/components/VideoGallery.tsx
+  134:63  error  Unexpected any. Specify a different type                                                                                          @typescript-eslint/no-explicit-any
+  176:21  error  Prefer the <Img /> tag from 'remotion' package, because it will wait until the image is loaded when you are rendering your video  @remotion/warn-native-media-tag
+  201:17  error  Prefer the <Img /> tag from 'remotion' package, because it will wait until the image is loaded when you are rendering your video  @remotion/warn-native-media-tag
+
+/workspace/remotion/src/hooks/useScreenRecording.ts
+   95:32  error  The result of Math.random() will change between frames while in rendering mode.
+Use the `random()` API from Remotion to get a deterministic pseudorandom value.
+If you are sure you want a true random value, use `random(null)` to hide this warning.
+See: https://remotion.dev/docs/using-randomness  @remotion/deterministic-randomness
+   96:30  error  The result of Math.random() will change between frames while in rendering mode.
+Use the `random()` API from Remotion to get a deterministic pseudorandom value.
+If you are sure you want a true random value, use `random(null)` to hide this warning.
+See: https://remotion.dev/docs/using-randomness  @remotion/deterministic-randomness
+   97:30  error  The result of Math.random() will change between frames while in rendering mode.
+Use the `random()` API from Remotion to get a deterministic pseudorandom value.
+If you are sure you want a true random value, use `random(null)` to hide this warning.
+See: https://remotion.dev/docs/using-randomness  @remotion/deterministic-randomness
+  122:62  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                @typescript-eslint/no-explicit-any
+  123:16  error  'e' is defined but never used                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  147:18  error  'e' is defined but never used                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  235:16  error  'e' is defined but never used                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+  249:16  error  'e' is defined but never used                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+
+✖ 11 problems (11 errors, 0 warnings)
+
+ ELIFECYCLE  Command failed with exit code 1.

@@ -1,0 +1,28 @@
+$ cd /workspace/remotion
+$ cd /workspace/remotion && pnpm run lint
+
+
+> remotion@1.0.0 lint /workspace/remotion
+> eslint src && tsc
+
+
+/workspace/remotion/src/KnouxRec.tsx
+  78:29  error  'setNotificationCount' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/workspace/remotion/src/Root.tsx
+  7:10  error  'z' is defined but never used  @typescript-eslint/no-unused-vars
+
+/workspace/remotion/src/components/FeatureCard.tsx
+  21:10  error  'isHovered' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/workspace/remotion/src/components/RecordingPanel.tsx
+  21:22  error  'setCurrentFps' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  22:20  error  'setCpuUsage' is assigned a value but never used    @typescript-eslint/no-unused-vars
+  23:20  error  'setGpuUsage' is assigned a value but never used    @typescript-eslint/no-unused-vars
+
+/workspace/remotion/src/components/TemplatesToolbox.tsx
+  2:10  error  'FeatureCard' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 7 problems (7 errors, 0 warnings)
+
+ ELIFECYCLE  Command failed with exit code 1.

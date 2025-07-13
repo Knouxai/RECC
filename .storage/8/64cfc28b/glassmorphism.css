@@ -1,0 +1,293 @@
+/* Glassmorphism and Neon styles for KNOUX REC */
+@import "tailwindcss";
+
+:root {
+  --primary-dark: #1B1B1B;
+  --primary-purple: #7F00FF;
+  --primary-blue: #00F0FF;
+  --neon-glow: 0 0 10px rgba(127, 0, 255, 0.8), 0 0 20px rgba(0, 240, 255, 0.4);
+  --glass-bg-dark: rgba(27, 27, 27, 0.75);
+  --glass-bg-light: rgba(240, 240, 240, 0.65);
+  --glass-border-dark: rgba(127, 0, 255, 0.3);
+  --glass-border-light: rgba(0, 240, 255, 0.3);
+}
+
+/* Dark Mode (Default) */
+.app-container {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, #252525 100%);
+  color: white;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+/* Glass Card - Dark */
+.glass-card {
+  background: rgba(27, 27, 27, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(127, 0, 255, 0.3);
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(0, 240, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Neon Button */
+.neon-button {
+  background: rgba(40, 40, 40, 0.8);
+  color: white;
+  border: 1px solid var(--primary-purple);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.neon-button:hover {
+  box-shadow: var(--neon-glow);
+  background: rgba(60, 60, 60, 0.8);
+}
+
+.neon-button.active {
+  background: rgba(127, 0, 255, 0.3);
+  box-shadow: var(--neon-glow);
+}
+
+/* Recording Button */
+.record-button {
+  background: rgba(40, 40, 40, 0.8);
+  color: white;
+  border: 1px solid #FF0000;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.record-button:hover {
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+}
+
+.record-button.recording {
+  background: rgba(255, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4);
+  animation: pulse 2s infinite;
+}
+
+/* Pause Button */
+.pause-button {
+  background: rgba(40, 40, 40, 0.8);
+  color: white;
+  border: 1px solid #FFC107;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.pause-button:hover {
+  box-shadow: 0 0 10px rgba(255, 193, 7, 0.8);
+}
+
+/* Stop Button */
+.stop-button {
+  background: rgba(40, 40, 40, 0.8);
+  color: white;
+  border: 1px solid #2196F3;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.stop-button:hover {
+  box-shadow: 0 0 10px rgba(33, 150, 243, 0.8);
+}
+
+/* Feature Card */
+.feature-card {
+  background: rgba(40, 40, 40, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(127, 0, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.feature-card:hover {
+  border-color: rgba(0, 240, 255, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card .icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 0 8px rgba(127, 0, 255, 0.5));
+}
+
+/* Light Mode */
+.light-mode {
+  background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+  color: #333;
+}
+
+.light-mode .glass-card {
+  background: rgba(240, 240, 240, 0.65);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+}
+
+.light-mode .neon-button {
+  background: rgba(240, 240, 240, 0.8);
+  color: #333;
+  border-color: var(--primary-blue);
+}
+
+.light-mode .neon-button:hover {
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
+}
+
+.light-mode .feature-card {
+  background: rgba(240, 240, 240, 0.7);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Toolbar and UI Components */
+.top-bar {
+  background: var(--glass-bg-dark);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--glass-border-dark);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.light-mode .top-bar {
+  background: var(--glass-bg-light);
+  border-bottom: 1px solid var(--glass-border-light);
+}
+
+/* Modal styles */
+.settings-modal {
+  background: rgba(27, 27, 27, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(127, 0, 255, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.light-mode .settings-modal {
+  background: rgba(240, 240, 240, 0.95);
+  border: 1px solid rgba(0, 240, 255, 0.4);
+}
+
+/* Performance metrics */
+.performance-metrics {
+  background: rgba(20, 20, 20, 0.9);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: monospace;
+  border: 1px solid rgba(127, 0, 255, 0.2);
+}
+
+.light-mode .performance-metrics {
+  background: rgba(240, 240, 240, 0.9);
+  border: 1px solid rgba(0, 240, 255, 0.2);
+}
+
+/* Settings tabs */
+.settings-tab {
+  padding: 8px 16px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.settings-tab.active {
+  border-bottom: 2px solid var(--primary-purple);
+}
+
+.light-mode .settings-tab.active {
+  border-bottom: 2px solid var(--primary-blue);
+}
+
+/* Custom range slider */
+.custom-range {
+  -webkit-appearance: none;
+  height: 6px;
+  background: rgba(127, 0, 255, 0.3);
+  border-radius: 3px;
+}
+
+.custom-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--primary-purple);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.light-mode .custom-range {
+  background: rgba(0, 240, 255, 0.3);
+}
+
+.light-mode .custom-range::-webkit-slider-thumb {
+  background: var(--primary-blue);
+}
+
+/* Timer display */
+.timer-display {
+  font-family: monospace;
+  font-size: 24px;
+  padding: 4px 12px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  border: 1px solid rgba(127, 0, 255, 0.3);
+}
+
+.light-mode .timer-display {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+}
