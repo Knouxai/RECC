@@ -4,6 +4,7 @@ import { fileManager, VideoProject } from "../services/FileManager";
 import { aiEngine, AISuggestion } from "../services/AIEngine";
 import { mediaProcessor, ProcessingOptions } from "../services/MediaProcessor";
 import { TemplateGallery } from "./TemplateGallery";
+import { CompleteMediaProcessor } from "./CompleteMediaProcessor";
 import { VideoTemplate, videoTemplates } from "../templates/TemplateData";
 
 type StudioMode =
@@ -285,7 +286,7 @@ export const StudioInterface: React.FC = () => {
             transition: "all 0.3s ease",
           }}
         >
-          🎭 معالجة الوسائط
+          🎭 معالج الوسائط الذكي
         </button>
 
         <button
@@ -402,7 +403,7 @@ export const StudioInterface: React.FC = () => {
             cursor: "pointer",
           }}
         >
-          💾 حفظ
+          💾 ��فظ
         </button>
       </div>
     </div>
@@ -536,7 +537,7 @@ export const StudioInterface: React.FC = () => {
             معالجة الوجه
           </h3>
           <p style={{ color: "#94a3b8", marginBottom: "20px" }}>
-            تحسين وتجميل الوجه تلقائياً
+            تحسين وتجم��ل الوجه تلقائياً
           </p>
           <button
             style={{
@@ -709,7 +710,7 @@ export const StudioInterface: React.FC = () => {
           }}
         >
           <h3 style={{ fontSize: "24px", marginBottom: "20px" }}>
-            💡 اقتراحات التحسين
+            ���� اقتراحات التحسين
           </h3>
 
           <button
@@ -875,7 +876,7 @@ export const StudioInterface: React.FC = () => {
           />
         </div>
       )}
-      {state.currentMode === "media" && renderMediaProcessor()}
+      {state.currentMode === "media" && <CompleteMediaProcessor />}
       {state.currentMode === "ai" && renderAIAssistant()}
 
       {/* إضافة CSS للحركات */}
