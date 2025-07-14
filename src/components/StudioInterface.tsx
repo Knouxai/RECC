@@ -5,6 +5,7 @@ import { aiEngine, AISuggestion } from "../services/AIEngine";
 import { mediaProcessor, ProcessingOptions } from "../services/MediaProcessor";
 import { TemplateGallery } from "./TemplateGallery";
 import { CompleteMediaProcessor } from "./CompleteMediaProcessor";
+import { RealMediaProcessor } from "./RealMediaProcessor";
 import { VideoTemplate, videoTemplates } from "../templates/TemplateData";
 
 type StudioMode =
@@ -286,7 +287,7 @@ export const StudioInterface: React.FC = () => {
             transition: "all 0.3s ease",
           }}
         >
-          🎭 معالج الوسائط الذكي
+          🎭 معالج الوسائط الذكي الحقيقي
         </button>
 
         <button
@@ -876,7 +877,7 @@ export const StudioInterface: React.FC = () => {
           />
         </div>
       )}
-      {state.currentMode === "media" && <CompleteMediaProcessor />}
+      {state.currentMode === "media" && <RealMediaProcessor />}
       {state.currentMode === "ai" && renderAIAssistant()}
 
       {/* إضافة CSS للحركات */}
