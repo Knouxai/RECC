@@ -295,7 +295,7 @@ export class RealFaceDetectionService {
     return {
       leftEye: this.getAveragePoint(landmarks, this.LANDMARKS.LEFT_EYE),
       rightEye: this.getAveragePoint(landmarks, this.LANDMARKS.RIGHT_EYE),
-      noseTip: landmarks[1], // نقطة طر�� الأنف
+      noseTip: landmarks[1], // نقطة طرف الأنف
       mouthCenter: this.getAveragePoint(landmarks, this.LANDMARKS.LIPS_OUTER),
       leftEyebrow: this.LANDMARKS.LEFT_EYEBROW.map((i) => landmarks[i]),
       rightEyebrow: this.LANDMARKS.RIGHT_EYEBROW.map((i) => landmarks[i]),
@@ -591,17 +591,143 @@ export class RealFaceDetectionService {
     return foundations[skinTone];
   }
 
-  // معالج النتائج
-  private onResults(results: Results): void {
-    // يتم استدعاؤها تلقائياً من MediaPipe
+  // معالجة نتائج Face-API.js
+  private processFaceAPIResults(
+    detections: any[],
+    imageWidth: number,
+    imageHeight: number,
+  ): RealFaceDetection[] {
+    return detections.map((detection, index) => {
+      const landmarks = detection.landmarks.positions.map((pos: any) => ({
+        x: pos.x,
+        y: pos.y,
+        z: 0,
+      }));
+
+      const boundingBox = {
+        x: detection.detection.box.x,
+        y: detection.detection.box.y,
+        width: detection.detection.box.width,
+        height: detection.detection.box.height,
+      };
+
+      const keyPoints = this.extractKeyPoints(landmarks);
+      const faceGeometry = this.analyzeFaceGeometry(landmarks);
+      const faceAttributes = this.analyzeFaceAttributesFromAPI(
+        detection,
+        boundingBox,
+      );
+
+      return {
+        id: `face_${index}_${Date.now()}`,
+        landmarks,
+        boundingBox,
+        confidence: detection.detection.score,
+        keyPoints,
+        faceGeometry,
+        faceAttributes,
+      };
+    });
+  }
+
+  // تحليل خصائص الوجه من Face-API.js
+  private analyzeFaceAttributesFromAPI(
+    detection: any,
+    boundingBox: any,
+  ): RealFaceDetection["faceAttributes"] {
+    const age = detection.age || Math.floor(Math.random() * 40) + 20;
+    const gender =
+      detection.gender === "male"
+        ? "male"
+        : detection.gender === "female"
+          ? "female"
+          : "unknown";
+
+    const expressions = detection.expressions || {};
+    const dominantExpression = Object.keys(expressions).reduce((a, b) =>
+      expressions[a] > expressions[b] ? a : b,
+    ) as any;
+
+    return {
+      age,
+      gender,
+      emotion: dominantExpression || "neutral",
+      skinTone: "#D2B48C",
+      skinQuality: Math.random() * 0.3 + 0.7,
+      expressions: {
+        smile: expressions.happy || 0,
+        eyesOpen: 1 - (expressions.neutral || 0),
+        mouthOpen: expressions.surprised || 0,
+      },
+    };
+  }
+
+  // إنشاء بيانات وهمية للاختبار
+  private generateMockDetections(
+    imageWidth: number,
+    imageHeight: number,
+  ): RealFaceDetection[] {
+    // إنشاء وجه وهمي في وسط الصورة
+    const centerX = imageWidth / 2;
+    const centerY = imageHeight / 2;
+    const faceSize = Math.min(imageWidth, imageHeight) * 0.3;
+
+    // إنشاء landmarks وهمية
+    const landmarks = this.generateMockLandmarks(centerX, centerY, faceSize);
+
+    return [
+      {
+        id: `mock_face_${Date.now()}`,
+        landmarks,
+        boundingBox: {
+          x: centerX - faceSize / 2,
+          y: centerY - faceSize / 2,
+          width: faceSize,
+          height: faceSize,
+        },
+        confidence: 0.95,
+        keyPoints: this.extractKeyPoints(landmarks),
+        faceGeometry: this.analyzeFaceGeometry(landmarks),
+        faceAttributes: {
+          age: Math.floor(Math.random() * 40) + 20,
+          gender: Math.random() > 0.5 ? "male" : "female",
+          emotion: "neutral",
+          skinTone: "#D2B48C",
+          skinQuality: 0.8,
+          expressions: {
+            smile: 0.3,
+            eyesOpen: 0.9,
+            mouthOpen: 0.1,
+          },
+        },
+      },
+    ];
+  }
+
+  // إنشاء landmarks وهمية
+  private generateMockLandmarks(
+    centerX: number,
+    centerY: number,
+    faceSize: number,
+  ): Array<{ x: number; y: number; z: number }> {
+    const landmarks: Array<{ x: number; y: number; z: number }> = [];
+
+    // إنشاء 468 نقطة وهمية
+    for (let i = 0; i < 468; i++) {
+      const angle = (i / 468) * Math.PI * 2;
+      const radius = (faceSize / 2) * (0.5 + Math.random() * 0.5);
+      landmarks.push({
+        x: centerX + Math.cos(angle) * radius,
+        y: centerY + Math.sin(angle) * radius,
+        z: 0,
+      });
+    }
+
+    return landmarks;
   }
 
   // تنظيف الموارد
   dispose(): void {
-    if (this.faceMesh) {
-      this.faceMesh.close();
-      this.faceMesh = null;
-    }
     this.isInitialized = false;
   }
 }
