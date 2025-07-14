@@ -145,11 +145,20 @@ export class MediaProcessor {
   private ctx: CanvasRenderingContext2D;
   private faceDetectionModel: any = null;
   private poseDetectionModel: any = null;
+  private backgroundSegmentationModel: any = null;
+  private styleTransferModel: any = null;
+  private enhancementFilters: Map<string, any> = new Map();
+  private processingQueue: Array<{
+    id: string;
+    operation: () => Promise<any>;
+  }> = [];
+  private isProcessing = false;
 
   constructor() {
     this.canvas = document.createElement("canvas");
     this.ctx = this.canvas.getContext("2d")!;
     this.initializeAIModels();
+    this.setupEnhancementFilters();
   }
 
   // معالجة الصور
@@ -355,62 +364,124 @@ export class MediaProcessor {
     });
   }
 
-  // تحسين الوجه التلقائي
+  // تحسين الوجه التلقائي المتقدم
   async autoEnhanceFace(imageFile: File): Promise<ProcessingResult> {
-    const options: ProcessingOptions = {
-      faceEnhancements: {
-        smoothSkin: 30,
-        brightenEyes: true,
-        whitenTeeth: true,
-        removeRedEye: true,
-        enhanceSmile: 20,
-      },
-      filters: {
-        brightness: 5,
-        contrast: 10,
-        saturation: 5,
-      },
-    };
+    const startTime = Date.now();
+    const operations: string[] = [];
 
-    return this.processImage(imageFile, options);
+    try {
+      const img = await this.loadImage(imageFile);
+      this.canvas.width = img.width;
+      this.canvas.height = img.height;
+      this.ctx.drawImage(img, 0, 0);
+
+      // كشف الوجوه المتقدم
+      const faces = await this.detectFaces(this.canvas);
+      if (faces.faces.length === 0) {
+        throw new Error("لم يتم العثور على وجوه في الصورة");
+      }
+
+      // تطبيق تحسينات متقدمة لكل وجه
+      for (const face of faces.faces) {
+        await this.applyAdvancedFaceEnhancement(face);
+        operations.push(`enhanced_face_${face.x}_${face.y}`);
+      }
+
+      // تحسين عام للصورة
+      await this.applyAutoColorCorrection();
+      await this.applySmartSharpening();
+      await this.removeNoise();
+      operations.push(
+        "auto_color_correction",
+        "smart_sharpening",
+        "noise_removal",
+      );
+
+      const outputBlob = await this.canvasToBlob();
+      const outputUrl = URL.createObjectURL(outputBlob);
+      const processingTime = Date.now() - startTime;
+
+      return {
+        success: true,
+        outputUrl,
+        metadata: {
+          originalSize: imageFile.size,
+          processedSize: outputBlob.size,
+          processingTime,
+          operations,
+        },
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: `فشل في تحسين الوجه: ${error}`,
+      };
+    }
   }
 
-  // مكياج تلقائي طبيعي
-  async applyNaturalMakeup(imageFile: File): Promise<ProcessingResult> {
-    const options: ProcessingOptions = {
-      makeup: {
-        foundation: {
-          enabled: true,
-          color: "#F5DEB3",
-          opacity: 30,
-        },
-        lipstick: {
-          enabled: true,
-          color: "#CD5C5C",
-          opacity: 40,
-        },
-        eyeshadow: {
-          enabled: true,
-          color: "#DEB887",
-          opacity: 25,
-        },
-        eyeliner: {
-          enabled: true,
-          thickness: 2,
-        },
-        mascara: {
-          enabled: true,
-          intensity: 30,
-        },
-        blush: {
-          enabled: true,
-          color: "#FFC0CB",
-          opacity: 20,
-        },
-      },
-    };
+  // مكياج تلقائي طبيعي متقدم
+  async applyNaturalMakeup(
+    imageFile: File,
+    style: "natural" | "glamorous" | "artistic" = "natural",
+  ): Promise<ProcessingResult> {
+    const startTime = Date.now();
+    const operations: string[] = [];
 
-    return this.processImage(imageFile, options);
+    try {
+      const img = await this.loadImage(imageFile);
+      this.canvas.width = img.width;
+      this.canvas.height = img.height;
+      this.ctx.drawImage(img, 0, 0);
+
+      const faces = await this.detectFaces(this.canvas);
+      if (faces.faces.length === 0) {
+        throw new Error("لم يتم العثور على وجوه في الصورة");
+      }
+
+      for (const face of faces.faces) {
+        // تحليل نوع البشرة ولونها
+        const skinAnalysis = await this.analyzeSkinTone(face);
+
+        // تطبيق المكياج حسب النوع المختار
+        switch (style) {
+          case "natural":
+            await this.applyNaturalMakeupStyle(face, skinAnalysis);
+            break;
+          case "glamorous":
+            await this.applyGlamorousMakeupStyle(face, skinAnalysis);
+            break;
+          case "artistic":
+            await this.applyArtisticMakeupStyle(face, skinAnalysis);
+            break;
+        }
+
+        operations.push(`${style}_makeup_applied`);
+      }
+
+      // تحسين عام
+      await this.applyPostMakeupEnhancement();
+      operations.push("post_makeup_enhancement");
+
+      const outputBlob = await this.canvasToBlob();
+      const outputUrl = URL.createObjectURL(outputBlob);
+      const processingTime = Date.now() - startTime;
+
+      return {
+        success: true,
+        outputUrl,
+        metadata: {
+          originalSize: imageFile.size,
+          processedSize: outputBlob.size,
+          processingTime,
+          operations,
+        },
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: `فشل في تطبيق المكياج: ${error}`,
+      };
+    }
   }
 
   // ======== الوظائف المساعدة ========
@@ -667,8 +738,43 @@ export class MediaProcessor {
   }
 
   private async initializeAIModels(): Promise<void> {
-    // تهيئة نماذج الذكاء الاصطناعي (محاكاة)
-    console.log("Initializing AI models...");
+    // تهيئة نماذج الذكاء الاصطناعي المتقدمة
+    console.log("تهيئة نماذج الذكاء الاصطناعي المتقدمة...");
+
+    try {
+      // محاكاة تح��يل النماذج
+      this.faceDetectionModel = { loaded: true, accuracy: 0.95 };
+      this.poseDetectionModel = { loaded: true, accuracy: 0.88 };
+      this.backgroundSegmentationModel = { loaded: true, accuracy: 0.92 };
+      this.styleTransferModel = {
+        loaded: true,
+        styles: ["portrait", "artistic", "vintage"],
+      };
+
+      console.log("تم تحميل جميع النماذج بنجاح");
+    } catch (error) {
+      console.error("فشل في تحميل النماذج:", error);
+    }
+  }
+
+  private setupEnhancementFilters(): void {
+    // إعداد مرشحات التحسين المتقدمة
+    this.enhancementFilters.set("skin_smoothing", {
+      algorithm: "bilateral_filter",
+      strength: 0.7,
+      preserve_details: true,
+    });
+
+    this.enhancementFilters.set("eye_enhancement", {
+      brightness_boost: 1.2,
+      contrast_boost: 1.1,
+      white_enhancement: true,
+    });
+
+    this.enhancementFilters.set("teeth_whitening", {
+      whitening_strength: 0.8,
+      natural_look: true,
+    });
   }
 }
 
