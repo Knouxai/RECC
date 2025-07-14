@@ -146,48 +146,32 @@ export class RealVideoProcessor {
     // لا حاجة لتهيئة FFmpeg في وضع المحاك��ة
   }
 
-  // تحميل FFmpeg
+  // تهيئة معالج الفيديو (محاكاة)
   async initialize(onProgress?: (progress: number) => void): Promise<void> {
     if (this.isLoaded) return;
 
     this.progressCallback = onProgress;
 
     try {
-      console.log("🎬 بدء تحميل FFmpeg...");
+      console.log("🎬 بدء تهيئة معالج الفيديو...");
 
-      // تحميل FFmpeg من CDN
-      const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd";
-
-      this.ffmpeg!.on("log", ({ message }) => {
-        console.log("FFmpeg Log:", message);
-      });
-
-      this.ffmpeg!.on("progress", ({ progress }) => {
-        if (this.progressCallback) {
-          this.progressCallback(progress * 100);
+      // محاكاة تحميل مع تقدم
+      if (onProgress) {
+        for (let i = 0; i <= 100; i += 10) {
+          onProgress(i);
+          await new Promise((resolve) => setTimeout(resolve, 50));
         }
-      });
-
-      await this.ffmpeg!.load({
-        coreURL: await toBlobURL(
-          `${baseURL}/ffmpeg-core.js`,
-          "text/javascript",
-        ),
-        wasmURL: await toBlobURL(
-          `${baseURL}/ffmpeg-core.wasm`,
-          "application/wasm",
-        ),
-      });
+      }
 
       this.isLoaded = true;
-      console.log("✅ تم تحميل FFmpeg بنجاح");
+      console.log("✅ تم تهيئة معالج الفيديو بنجاح (وضع العرض التوضيحي)");
     } catch (error) {
-      console.error("❌ فشل في تحميل FFmpeg:", error);
+      console.error("❌ فشل في تهيئة معالج الفيديو:", error);
       throw new Error("فشل في تهيئة معالج الفيديو");
     }
   }
 
-  // معالجة الفيديو الأساسية
+  // معال��ة الفيديو الأساسية
   async processVideo(
     videoFile: File,
     options: VideoProcessingOptions,
@@ -447,7 +431,7 @@ export class RealVideoProcessor {
     // تحليل الفيديو أولاً
     const analysis = await this.analyzeVideo(videoFile);
 
-    // تحديد التحسينات المطلوبة
+    // تحديد التحسينات المطلو��ة
     const enhancements: VideoProcessingOptions = {
       filters: {},
       effects: {},
