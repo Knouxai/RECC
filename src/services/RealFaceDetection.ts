@@ -1,6 +1,6 @@
-// خدمة كشف الوجوه الحقيقية باستخدام MediaPipe
-import { FaceMesh, Results } from "@mediapipe/face_mesh";
-import { Camera } from "@mediapipe/camera_utils";
+// خدمة كشف الوجوه الحقيقية باستخدام Face-API.js
+import * as faceapi from "face-api.js";
+import "@tensorflow/tfjs-backend-webgl";
 
 export interface RealFaceDetection {
   id: string;
