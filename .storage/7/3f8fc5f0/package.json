@@ -1,11 +1,21 @@
 {
-  "name": "remotion",
+  "name": "smart-video-studio",
   "version": "1.0.0",
-  "description": "My Remotion video",
+  "description": "الاستوديو الذكي لإنتاج الفيديوهات بالذكاء الاصطناعي",
   "repository": {},
   "license": "UNLICENSED",
   "private": true,
   "packageManager": "pnpm@10.10.0",
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion bundle --out-dir ./dist",
+    "build-exe": "npm run build && node create-executable.js",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc",
+    "start": "remotion studio",
+    "preview": "remotion preview",
+    "render": "remotion render"
+  },
   "dependencies": {
     "@remotion/animated-emoji": "4.0.323",
     "@remotion/animation-utils": "4.0.323",
@@ -32,15 +42,34 @@
     "@types/web": "0.0.166",
     "eslint": "9.19.0",
     "prettier": "3.3.3",
-    "typescript": "5.5.4"
-  },
-  "scripts": {
-    "dev": "remotion studio",
-    "build": "remotion bundle --out-dir ./dist",
-    "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
+    "typescript": "5.5.4",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.0.0"
   },
   "sideEffects": [
     "*.css"
-  ]
+  ],
+  "main": "dist/index.html",
+  "homepage": "./",
+  "build": {
+    "appId": "com.smartvideostudio.app",
+    "productName": "الاستوديو الذكي للفيديو",
+    "directories": {
+      "output": "build-exe"
+    },
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
 }
