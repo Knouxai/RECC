@@ -1,6 +1,5 @@
-// خدمة معالجة الفيديو الحقيقية باستخدام FFmpeg
-import { FFmpeg } from "@ffmpeg/ffmpeg";
-import { toBlobURL, fetchFile } from "@ffmpeg/util";
+// خدمة معالجة الفيديو المتقدمة (محاكاة + معالجة أساسية)
+// ملاحظة: هذه نسخة محاكاة لإظهار الواجهة - في التطبيق الحقيقي يحتاج FFmpeg
 
 export interface VideoProcessingOptions {
   // خيارات أساسية
@@ -189,7 +188,7 @@ export class RealVideoProcessor {
     }
   }
 
-  // معالجة الفيديو الأساسية
+  // معالجة الفيديو ��لأساسية
   async processVideo(
     videoFile: File,
     options: VideoProcessingOptions,
@@ -404,7 +403,7 @@ export class RealVideoProcessor {
       // تحليل المشاهد
       const sceneAnalysis = await this.analyzeScenes(inputFileName);
 
-      // تحليل الألوان
+      // ت��ليل الألوان
       const colorAnalysis = await this.analyzeColors(inputFileName);
 
       await this.ffmpeg!.deleteFile(inputFileName);
@@ -846,7 +845,7 @@ export class RealVideoProcessor {
     outputFile: string,
     options: { transition?: "fade" | "slide"; duration?: number },
   ): string[] {
-    // بناء أمر دمج مع انتقالات معقد
+    // بناء أمر ��مج مع انتقالات معقد
     const args: string[] = [];
     const transitionDuration = options.duration || 1;
 
