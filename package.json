@@ -25,16 +25,10 @@
     "remotion": "^4.0.314",
     "tailwindcss": "^4.1.10",
     "zod": "3.22.3",
-    "@mediapipe/face_mesh": "^0.4.1633559619",
-    "@mediapipe/selfie_segmentation": "^0.1.1675465747",
     "@tensorflow/tfjs": "^4.15.0",
     "@tensorflow/tfjs-backend-webgl": "^4.15.0",
     "face-api.js": "^0.22.2",
-    "@ffmpeg/ffmpeg": "^0.12.7",
-    "@ffmpeg/util": "^0.12.1",
-    "opencv-js": "^1.2.1",
     "colorthief": "^2.4.0",
-    "sharp": "^0.33.1",
     "jimp": "^0.22.10"
   },
   "devDependencies": {
