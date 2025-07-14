@@ -139,12 +139,11 @@ export interface VideoAnalysis {
 }
 
 export class RealVideoProcessor {
-  private ffmpeg: FFmpeg | null = null;
   private isLoaded = false;
   private progressCallback?: (progress: number) => void;
 
   constructor() {
-    this.ffmpeg = new FFmpeg();
+    // لا حاجة لتهيئة FFmpeg في وضع المحاك��ة
   }
 
   // تحميل FFmpeg
@@ -188,7 +187,7 @@ export class RealVideoProcessor {
     }
   }
 
-  // معالجة الفيديو ��لأساسية
+  // معالجة الفيديو الأساسية
   async processVideo(
     videoFile: File,
     options: VideoProcessingOptions,
@@ -403,7 +402,7 @@ export class RealVideoProcessor {
       // تحليل المشاهد
       const sceneAnalysis = await this.analyzeScenes(inputFileName);
 
-      // ت��ليل الألوان
+      // تحليل الألوان
       const colorAnalysis = await this.analyzeColors(inputFileName);
 
       await this.ffmpeg!.deleteFile(inputFileName);
@@ -845,7 +844,7 @@ export class RealVideoProcessor {
     outputFile: string,
     options: { transition?: "fade" | "slide"; duration?: number },
   ): string[] {
-    // بناء أمر ��مج مع انتقالات معقد
+    // بناء أمر دمج مع انتقالات معقد
     const args: string[] = [];
     const transitionDuration = options.duration || 1;
 
