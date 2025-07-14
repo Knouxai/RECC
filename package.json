@@ -59,6 +59,8 @@
     "electron-dist": "pnpm web-build && electron-builder",
     "build": "pnpm web-build",
     "dist": "pnpm electron-dist",
+    "build-app": "node scripts/build-app.js",
+    "package-exe": "pnpm build-app",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc"
   },
