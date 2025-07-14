@@ -39,6 +39,7 @@
     "cross-env": "^7.0.3",
     "electron": "^37.2.1",
     "electron-builder": "^26.0.12",
+    "electron-is-dev": "^3.0.1",
     "eslint": "9.19.0",
     "prettier": "3.3.3",
     "typescript": "5.5.4",
