@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>حول التطبيق</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px;
+        min-height: 100vh;
+        direction: rtl;
+      }
+
+      .container {
+        max-width: 350px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .logo {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        animation: pulse 2s infinite;
+      }
+
+      .app-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .version {
+        font-size: 1rem;
+        margin-bottom: 20px;
+        opacity: 0.8;
+      }
+
+      .description {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      .features {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        text-align: right;
+      }
+
+      .features h3 {
+        margin-bottom: 10px;
+        text-align: center;
+      }
+
+      .features ul {
+        list-style: none;
+      }
+
+      .features li {
+        margin-bottom: 5px;
+        padding-right: 15px;
+      }
+
+      .tech-info {
+        background: rgba(0, 0, 0, 0.2);
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+      }
+
+      .close-btn {
+        background: #4ecdc4;
+        color: white;
+        border: none;
+        padding: 10px 30px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .close-btn:hover {
+        background: #45b7aa;
+        transform: translateY(-2px);
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="logo">🎬</div>
+      <h1 class="app-name">الاستوديو الذكي للفيديو</h1>
+      <p class="version">الإصدار 1.0.0 - Desktop Edition</p>
+
+      <div class="description">
+        <p>
+          تطبيق سطح مكتب متقدم لإنتاج الفيديوهات الاحترافية بتقنيات الذكاء
+          الاصطناعي. مصمم للعمل بكفاءة عالية مع دعم كامل للغة العربية.
+        </p>
+      </div>
+
+      <div class="features">
+        <h3>✨ الميزات الرئيسية</h3>
+        <ul>
+          <li>🤖 ذكاء اصطناعي متقدم</li>
+          <li>📋 17+ قالب احترافي</li>
+          <li>🎵 مكتبة أصوات شاملة</li>
+          <li>🖼️ 1000+ صورة وخلفية</li>
+          <li>🎨 200+ تأثير وانتقال</li>
+          <li>🌐 واجهة عربية كاملة</li>
+          <li>💾 يعمل بدون إنترنت</li>
+          <li>⚡ معالجة سريعة</li>
+        </ul>
+      </div>
+
+      <div class="tech-info">
+        <strong>معلومات تقنية:</strong><br />
+        مبني بـ: Electron + Remotion + React<br />
+        حجم التطبيق: ~47 ميجابايت<br />
+        المنصة: Windows/Mac/Linux<br />
+        آخر تحديث: <span id="buildDate"></span>
+      </div>
+
+      <button class="close-btn" onclick="window.close()">إغلاق</button>
+    </div>
+
+    <script>
+      // تعيين تاريخ البناء
+      document.getElementById("buildDate").textContent =
+        new Date().toLocaleDateString("ar-SA");
+
+      // معلومات إضافية من Electron
+      if (window.require) {
+        const { ipcRenderer } = window.require("electron");
+
+        ipcRenderer.invoke("get-app-info").then((info) => {
+          const techInfo = document.querySelector(".tech-info");
+          techInfo.innerHTML = `
+                    <strong>معلومات تقنية:</strong><br>
+                    الاسم: ${info.name}<br>
+                    الإصدار: ${info.version}<br>
+                    المنصة: ${info.platform} (${info.arch})<br>
+                    Electron: v${info.electron}<br>
+                    Node.js: v${info.node}<br>
+                    Chrome: v${info.chrome}
+                `;
+        });
+      }
+    </script>
+  </body>
+</html>
