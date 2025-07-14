@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>الاستوديو الذكي للفيديو - جاري التحميل</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        overflow: hidden;
+      }
+
+      .loading-container {
+        text-align: center;
+        max-width: 500px;
+        width: 90%;
+      }
+
+      .logo {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        animation: pulse 2s infinite;
+      }
+
+      .title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+        background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        opacity: 0.9;
+      }
+
+      .progress-container {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 25px;
+        padding: 8px;
+        margin-bottom: 30px;
+      }
+
+      .progress-bar {
+        height: 15px;
+        background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+        border-radius: 20px;
+        width: 0%;
+        transition: width 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .progress-bar::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.4),
+          transparent
+        );
+        animation: shimmer 1.5s infinite;
+      }
+
+      .status {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        min-height: 30px;
+      }
+
+      .components {
+        text-align: right;
+        margin-top: 30px;
+        max-height: 200px;
+        overflow-y: auto;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+      }
+
+      .component {
+        margin-bottom: 8px;
+        padding: 5px 0;
+        opacity: 0;
+        transform: translateX(20px);
+        animation: slideIn 0.5s ease forwards;
+      }
+
+      .version-info {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.3);
+        padding: 10px 20px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+      }
+
+      .error-message {
+        background: rgba(255, 0, 0, 0.2);
+        border: 1px solid rgba(255, 0, 0, 0.5);
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 20px;
+        display: none;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+      }
+
+      @keyframes shimmer {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      @keyframes slideIn {
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid #4ecdc4;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading-container">
+      <div class="logo">🎬</div>
+      <h1 class="title">الاستوديو الذكي للفيديو</h1>
+      <p class="subtitle">إنتاج فيديوهات احترافية بالذكاء الاصطناعي</p>
+
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="status" id="statusText">جاري تحميل النظام الأساسي...</div>
+
+      <div class="spinner"></div>
+
+      <div class="components" id="componentsList">
+        <h3 style="margin-bottom: 15px">🔧 المكونات المحملة:</h3>
+      </div>
+
+      <div class="error-message" id="errorMessage">
+        <h3>❌ خطأ في التحميل</h3>
+        <p id="errorDetails"></p>
+        <button
+          onclick="retryLoading()"
+          style="
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+            cursor: pointer;
+          "
+        >
+          إعادة المحاولة
+        </button>
+      </div>
+    </div>
+
+    <div class="version-info">الإصدار 1.0.0 - تطبيق سطح المكتب</div>
+
+    <script>
+      // قائمة المكونات للتحميل
+      const components = [
+        "🔍 محرك الفحص الذكي",
+        "🤖 نظام التخصيص التلقائي",
+        "🎨 مولد المحتوى الذكي",
+        "📊 نظام التقارير الشامل",
+        "📦 محرك التغليف والتصدير",
+        "🎥 محرك معالجة الفيديو",
+        "🎵 مكتبة الأصوات (500+ ملف)",
+        "🖼️ مكتبة الصور (1000+ صورة)",
+        "🎨 مكتبة التأثيرات (200+ تأ��ير)",
+        "📋 القوالب الاحترافية (17 قالب)",
+        "🌐 واجهة المستخدم العربية",
+        "⚙️ إعدادات النظام",
+        "🔐 نظام الحماية والتشفير",
+        "📱 نظام الإشعارات",
+        "🚀 Remotion Studio Engine",
+      ];
+
+      let currentProgress = 0;
+      let currentComponent = 0;
+      let loadingInterval;
+
+      // بدء عملية التحميل
+      function startLoading() {
+        const progressBar = document.getElementById("progressBar");
+        const statusText = document.getElementById("statusText");
+        const componentsList = document.getElementById("componentsList");
+
+        loadingInterval = setInterval(() => {
+          if (currentComponent < components.length) {
+            // إضافة المكون الحالي
+            const componentDiv = document.createElement("div");
+            componentDiv.className = "component";
+            componentDiv.innerHTML = `✅ ${components[currentComponent]}`;
+            componentDiv.style.animationDelay = "0s";
+            componentsList.appendChild(componentDiv);
+
+            // تحديث شريط التقدم والحالة
+            currentProgress =
+              ((currentComponent + 1) / components.length) * 100;
+            progressBar.style.width = currentProgress + "%";
+            statusText.textContent = `جاري تحميل: ${components[currentComponent]}`;
+
+            currentComponent++;
+          } else {
+            // انتهى التحميل
+            clearInterval(loadingInterval);
+            statusText.textContent = "✅ تم تحميل جميع المكونات بنجاح!";
+
+            setTimeout(() => {
+              statusText.textContent = "🚀 بدء تشغيل Remotion Studio...";
+
+              // محاولة الاتصال بـ Remotion Studio
+              setTimeout(checkRemotionStatus, 2000);
+            }, 1000);
+          }
+        }, 600);
+      }
+
+      // فحص حالة Remotion Studio
+      function checkRemotionStatus() {
+        const statusText = document.getElementById("statusText");
+        statusText.textContent = "🔗 الاتصال بـ Remotion Studio...";
+
+        // محاولة الاتصال بالخادم المحلي
+        fetch("http://localhost:3000")
+          .then((response) => {
+            if (response.ok) {
+              statusText.textContent = "✅ Remotion Studio جاهز!";
+              setTimeout(() => {
+                // سيتم تحميل Remotion Studio تلقائياً بواسطة Electron
+                statusText.textContent = "🎬 مرحباً بك في الاستوديو الذكي!";
+              }, 1000);
+            } else {
+              throw new Error("Server not ready");
+            }
+          })
+          .catch((error) => {
+            console.log("Remotion not ready yet, retrying...");
+            setTimeout(checkRemotionStatus, 2000);
+          });
+      }
+
+      // إعادة محاولة التحميل
+      function retryLoading() {
+        document.getElementById("errorMessage").style.display = "none";
+        currentProgress = 0;
+        currentComponent = 0;
+        document.getElementById("componentsList").innerHTML =
+          '<h3 style="margin-bottom: 15px;">🔧 المكونات المحملة:</h3>';
+        document.getElementById("progressBar").style.width = "0%";
+        startLoading();
+      }
+
+      // عرض خطأ
+      function showError(message) {
+        const errorMessage = document.getElementById("errorMessage");
+        const errorDetails = document.getElementById("errorDetails");
+
+        errorDetails.textContent = message;
+        errorMessage.style.display = "block";
+
+        clearInterval(loadingInterval);
+      }
+
+      // التعامل مع أخطاء الشبكة
+      window.addEventListener("error", (event) => {
+        console.error("Error:", event.error);
+        showError("حدث خطأ أثناء تحميل التطبيق. يرجى إعادة المحاولة.");
+      });
+
+      // بدء التحميل عند تحميل الصفحة
+      window.addEventListener("load", () => {
+        setTimeout(startLoading, 1000);
+      });
+
+      // معلومات إضافية للمطور
+      console.log("🎬 الاستوديو الذكي للفيديو v1.0.0");
+      console.log("تطبيق سطح مكتب مبني بـ Electron + Remotion");
+      console.log("المكونات الذكية: 15 مكون");
+      console.log("الأصول المتضمنة: 1500+ ملف");
+    </script>
+  </body>
+</html>
