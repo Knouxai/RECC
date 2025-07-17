@@ -100,7 +100,7 @@ export const videoTemplates: VideoTemplate[] = [
   {
     id: "social-story",
     name: "قصة اجتماعية",
-    description: "قالب مثالي لوسائل التواصل الاجتماعي مع تأثيرات جذابة",
+    description: "قالب مثالي ��وسائل التواصل الاجتماعي مع تأثيرات جذابة",
     thumbnail: "/thumbnails/social-story.jpg",
     category: "social",
     tags: ["سوشيال ميديا", "قصص", "تفاعلي", "شبابي"],
@@ -253,7 +253,7 @@ export const videoTemplates: VideoTemplate[] = [
         speed: 1,
       },
       extras: {
-        podcastName: "بودكاست الإبدا��",
+        podcastName: "بودكاست الإبداع",
         episodeNumber: "الحلقة 15",
         hostName: "المذيع المميز",
         duration: "45 دقيقة",
@@ -312,7 +312,7 @@ export const videoTemplates: VideoTemplate[] = [
       text: {
         title: "الاختراق الطبي الجديد",
         subtitle: "تقنيات جراحية متطورة",
-        description: "دراسة حديثة في علاج السرطان باستخدام العلاج المناعي",
+        description: "دراسة حديثة في عل��ج السرطان باستخدام العلاج المناعي",
       },
       colors: {
         primary: "#0ea5e9",
@@ -347,7 +347,7 @@ export const videoTemplates: VideoTemplate[] = [
       text: {
         title: "مستقبل التقنية",
         subtitle: "حلول ذكية للمشاكل المعقدة",
-        description: "نطور تطبيقات الذكاء الاصطناعي لتحسين حياة المجتمع",
+        description: "نط��ر تطبيقات الذكاء الاصطناعي لتحسين حياة المجتمع",
       },
       colors: {
         primary: "#6366f1",
@@ -369,7 +369,7 @@ export const videoTemplates: VideoTemplate[] = [
   },
   {
     id: "sports-championship",
-    name: "ا��بطولة الرياضية",
+    name: "البطولة الرياضية",
     description: "قالب ديناميكي للأحداث الرياضية والبطولات مع تأثيرات الطاقة",
     thumbnail: "/thumbnails/sports.jpg",
     category: "celebration",
@@ -420,7 +420,7 @@ export const videoTemplates: VideoTemplate[] = [
     customizableProps: {
       text: {
         title: "قصر الأحلام",
-        subtitle: "الفخامة تلتقي بالحداثة",
+        subtitle: "الفخامة تلتقي بالح��اثة",
         description: "فيلا استثنائية في قلب الرياض الجديدة مع إطلالة خلابة",
       },
       colors: {
@@ -552,7 +552,7 @@ export const videoTemplates: VideoTemplate[] = [
         weddingDate: "15 ربيع الأول 1446هـ",
         venue: "قصر الأفراح الملكي",
         city: "الرياض",
-        weddingTheme: "ا��تراث النجدي الأصيل",
+        weddingTheme: "التراث النجدي الأصيل",
         guestCount: "500 مدعو",
         blessing: "بارك الله لهما وبارك عليهما وجمع بينهما في خير",
       },
@@ -637,7 +637,7 @@ export const videoTemplates: VideoTemplate[] = [
   {
     id: "corporate-report",
     name: "التقرير السنوي",
-    description: "قالب مؤسسي محترف لعرض التقارير السنوية والإنجازات المؤسسية",
+    description: "قالب مؤسسي محترف لعرض التقارير السنوية والإنج��زات المؤسسية",
     thumbnail: "/thumbnails/corporate.jpg",
     category: "business",
     tags: ["تقرير", "شركة", "إحصائيات", "أرباح", "نمو"],
@@ -683,6 +683,13 @@ export const templateCategories = [
   { id: "marketing", name: "تسويقي", icon: "📢" },
   { id: "educational", name: "تعليمي", icon: "📚" },
   { id: "celebration", name: "احتفالي", icon: "🎉" },
+  { id: "medical", name: "طبي", icon: "🏥" },
+  { id: "technology", name: "تقني", icon: "💻" },
+  { id: "sports", name: "رياضي", icon: "⚽" },
+  { id: "travel", name: "سياحي", icon: "✈️" },
+  { id: "food", name: "طعام", icon: "🍽️" },
+  { id: "real-estate", name: "عقاري", icon: "🏡" },
+  { id: "religious", name: "ديني", icon: "🕌" },
 ];
 
 export const difficultyLevels = [
