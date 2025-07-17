@@ -7,6 +7,7 @@ import { TemplateGallery } from "./TemplateGallery";
 import { CompleteMediaProcessor } from "./CompleteMediaProcessor";
 import { RealMediaProcessor } from "./RealMediaProcessor";
 import { VideoTemplate, videoTemplates } from "../templates/TemplateData";
+import "../styles/animations.css";
 
 type StudioMode =
   | "welcome"
