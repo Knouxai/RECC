@@ -215,7 +215,7 @@ export class AIEngine {
       suggestions.push({
         id: "audio_enhancement_" + Date.now(),
         type: "audio",
-        title: "إضافة الموسيقى والمؤثرات الصوتية المناسبة",
+        title: "إضافة الموسيقى وال��ؤثرات الصوتية المناسبة",
         description: `بناءً على مزاج المحتوى، نقترح ${audioSuggestions.recommendations.length} مقطع صوتي يناسب الطابع العام`,
         confidence: 0.82,
         action: () => this.addAudioElements(project, audioSuggestions),
@@ -232,7 +232,7 @@ export class AIEngine {
         title: "قوالب ذكية مقترحة بناءً على تحليل المحتوى",
         description: `عثرنا على ${smartTemplates.length} قالب يناسب محتواك بشكل مثالي ويحسن من جودة العرض`,
         confidence: 0.65,
-        action: () => this.showAlternativeTemplates(alternativeTemplates),
+                action: () => this.showAlternativeTemplates(smartTemplates),
         category: "creative",
       });
     }
