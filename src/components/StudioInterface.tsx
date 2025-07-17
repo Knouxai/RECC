@@ -394,14 +394,7 @@ export const StudioInterface: React.FC = () => {
               overflow: "hidden",
               transformStyle: "preserve-3d",
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
-              e.currentTarget.style.boxShadow = `0 25px 50px ${button.shadowColor}`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0) scale(1)";
-              e.currentTarget.style.boxShadow = `0 15px 35px ${button.shadowColor}`;
-            }}
+            className="interactive-element hover-lift click-effect gpu-accelerated"
           >
             {/* طبقة تأثير لمعان */}
             <div
@@ -1040,7 +1033,7 @@ export const StudioInterface: React.FC = () => {
                 textAlign: "right",
               }}
             >
-              🎭 اقتراح تأثيرات بصرية
+              🎭 اقتراح تأثيرات بصر��ة
             </button>
 
             <button
