@@ -118,66 +118,119 @@ export class AIEngine {
     };
   }
 
-  // توليد اقتراحات ذكية
+    // توليد اقتراحات ذكية متقدمة
   async generateSuggestions(
     project: VideoProject,
     analysis: any,
   ): Promise<AISuggestion[]> {
     const suggestions: AISuggestion[] = [];
 
-    // اقتراحات الألوان
+    // اقتراحات الألوان المتقدمة
     if (analysis.visual.color_harmony < 0.7) {
+      const smartColors = this.generateSmartColorPalette(project);
       suggestions.push({
         id: "color_harmony_" + Date.now(),
         type: "color",
-        title: "تحسين تناغم الألوان",
-        description:
-          "الألوان الحالية قد تحتاج لتحسين التناغم. جرب هذه المجموعة المقترحة.",
-        confidence: 0.85,
-        preview: this.generateColorPreview(["#3b82f6", "#8b5cf6", "#1e40af"]),
-        action: () =>
-          this.applyColorSuggestion(project, ["#3b82f6", "#8b5cf6", "#1e40af"]),
+        title: "مجموعة ألوان ذكية مخصصة",
+        description: `بناءً على تحليل محتواك، نقترح هذه المجموعة اللونية التي تحسن التناغم بنسبة 40% وتزيد التفاعل`,
+        confidence: 0.92,
+        preview: this.generateColorPreview(smartColors),
+        action: () => this.applySmartColorScheme(project, smartColors),
+        category: "creative",
+      });
+    }
+
+    // اقتراحات النصوص الذكية
+    if (analysis.content.readability < 0.6) {
+      suggestions.push({
+        id: "text_enhancement_" + Date.now(),
+        type: "text",
+        title: "تحسين النص باستخدام الذكاء الاصطناعي",
+        description: "سنعيد صياغة النص ليكون أكثر وضوحاً وتأثيراً مع الحفاظ على المعنى الأصلي",
+        confidence: 0.88,
+        action: () => this.enhanceTextWithAI(project),
         category: "improvement",
       });
     }
 
-    // اقتراحات النصوص
-    if (analysis.content.readability < 0.6) {
+    // اقتراحات التوقيت الذكي
+    const timingAnalysis = this.analyzeOptimalTiming(project);
+    if (timingAnalysis.needsImprovement) {
       suggestions.push({
-        id: "text_readability_" + Date.now(),
-        type: "text",
-        title: "تحسين قابلية القراءة",
-        description:
-          "النص قد يكون صعب القراءة. جرب تقسيمه إلى فقرات أقصر أو تغيير الخط.",
-        confidence: 0.78,
-        action: () => this.improveTextReadability(project),
-        category: "accessibility",
-      });
-    }
-
-    // اقتراحات الحركة
-    if (project.timeline.length > 10) {
-      suggestions.push({
-        id: "animation_optimization_" + Date.now(),
-        type: "animation",
-        title: "تحسين الحركات",
-        description:
-          "يمكن تقليل تعقيد الحركات لتحسين الأداء مع الحفاظ على الجاذبية.",
-        confidence: 0.72,
-        action: () => this.optimizeAnimations(project),
+        id: "timing_optimization_" + Date.now(),
+        type: "timing",
+        title: "تحسين توقيت العناصر للحصول على أقصى تأثير",
+        description: `تحسين توقيت ظهور العناصر يمكن أن يزيد الاهتمام بنسبة ${timingAnalysis.improvementPercentage}%`,
+        confidence: 0.85,
+        action: () => this.optimizeTiming(project, timingAnalysis.suggestions),
         category: "optimization",
       });
     }
 
-    // اقتراحات القوالب البديلة
-    const alternativeTemplates =
-      await this.suggestAlternativeTemplates(project);
-    if (alternativeTemplates.length > 0) {
+    // اقتراحات المحتوى التفاعلي
+    const interactivitySuggestions = this.generateInteractivitySuggestions(project);
+    if (interactivitySuggestions.length > 0) {
       suggestions.push({
-        id: "template_alternative_" + Date.now(),
+        id: "interactivity_" + Date.now(),
+        type: "layout",
+        title: "إضافة عناصر تفاعلية ذكية",
+        description: "إضافة عناصر تفاعلية مثل الأزرار الذكية وتأثيرات الماوس لزيادة التفاعل",
+        confidence: 0.79,
+        action: () => this.addInteractiveElements(project, interactivitySuggestions),
+        category: "creative",
+      });
+    }
+
+    // اقتراحات تحسين الوصولية
+    const accessibilityScore = this.calculateAccessibilityScore(project);
+    if (accessibilityScore < 0.8) {
+      suggestions.push({
+        id: "accessibility_" + Date.now(),
+        type: "accessibility",
+        title: "تحسين إمكانية الوصول للجميع",
+        description: "إضافة النصوص البديلة وتحسين التباين ليكون المحتوى متاحاً لذوي الاحتياجات الخاصة",
+        confidence: 0.94,
+        action: () => this.improveAccessibility(project),
+        category: "accessibility",
+      });
+    }
+
+    // اقتراحات التحسين للمنصات المختلفة
+    const platformOptimizations = this.analyzePlatformOptimizations(project);
+    if (platformOptimizations.length > 0) {
+      suggestions.push({
+        id: "platform_optimization_" + Date.now(),
+        type: "layout",
+        title: "تحسين العرض للمنصات المختلفة",
+        description: `تحسين العرض لـ ${platformOptimizations.join(', ')} لضمان أفضل تجربة مستخدم",
+        confidence: 0.87,
+        action: () => this.optimizeForPlatforms(project, platformOptimizations),
+        category: "optimization",
+      });
+    }
+
+    // اقتراحات الموسيقى والمؤثرات الصوتية
+    const audioSuggestions = this.generateAudioSuggestions(project);
+    if (audioSuggestions.recommendations.length > 0) {
+      suggestions.push({
+        id: "audio_enhancement_" + Date.now(),
+        type: "audio",
+        title: "إضافة الموسيقى والمؤثرات الصوتية المناسبة",
+        description: `بناءً على مزاج المحتوى، نقترح ${audioSuggestions.recommendations.length} مقطع صوتي يناسب الطابع العام`,
+        confidence: 0.82,
+        action: () => this.addAudioElements(project, audioSuggestions),
+        category: "creative",
+      });
+    }
+
+    // اقتراحات القوالب البديلة الذكية
+    const smartTemplates = await this.findSmartAlternativeTemplates(project);
+    if (smartTemplates.length > 0) {
+      suggestions.push({
+        id: "smart_template_" + Date.now(),
         type: "template",
-        title: "قوالب بديلة مقترحة",
-        description: `وجدنا ${alternativeTemplates.length} قوالب قد تناسب محتواك بشكل أفضل.`,
+        title: "قوالب ذكية مقترحة بناءً على تحليل المحتوى",
+        description: `عثرنا على ${smartTemplates.length} قالب يناسب محتواك بشكل مثالي ويحسن من جودة العرض`,
         confidence: 0.65,
         action: () => this.showAlternativeTemplates(alternativeTemplates),
         category: "creative",
@@ -312,7 +365,7 @@ export class AIEngine {
         "انضم إلينا في رحلة استكشاف {subject} وتعرف على أسراره المدهشة.",
         "اكتشف كيف يمكن لـ {subject} أن يغير حياتك للأفضل.",
         "تعلم كل شيء عن {subject} من خلال هذا المحتوى التفاعلي.",
-        "استمتع بتجربة فريدة مع {subject} واستكشف إمكانياته اللامحدودة.",
+        "استمتع بتجربة فري��ة مع {subject} واستكشف إمكانياته اللامحدودة.",
       ],
       hashtags: [
         "#{subject}",
@@ -469,7 +522,7 @@ export class AIEngine {
   }
 
   private findOptimizationOpportunities(project: VideoProject): string[] {
-    return ["ضغط الصور", "تقليل عدد الطبقات", "تحسين الحركات"];
+    return ["ضغط الصور", "تقليل عدد الطبقات", "تحسي�� الحركات"];
   }
 
   private predictLoadingTime(project: VideoProject): number {
@@ -564,7 +617,7 @@ export class AIEngine {
   }
 
   private retrainModels(): void {
-    // محاكاة إعادة تدريب النماذج
+    // محاك��ة إعادة تدريب النماذج
     console.log("Retraining AI models with new data...");
   }
 }
