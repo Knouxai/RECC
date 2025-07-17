@@ -68,7 +68,7 @@ export const StudioInterface: React.FC = () => {
         notifications: [...prev.notifications, notification],
       }));
 
-      // إزالة الإشعار ��عد 5 ثوانِ
+      // إزالة الإشعار بعد 5 ثوانِ
       setTimeout(() => {
         setState((prev) => ({
           ...prev,
@@ -327,85 +327,191 @@ export const StudioInterface: React.FC = () => {
         </div>
       </div>
 
+      {/* أزرار تفاعلية متطورة */}
       <div
         style={{
-          display: "flex",
-          gap: "30px",
-          flexWrap: "wrap",
-          justifyContent: "center",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: "25px",
+          maxWidth: "1200px",
+          width: "100%",
+          padding: "0 20px",
         }}
       >
-        <button
-          onClick={() => changeMode("templates")}
-          style={{
-            background: "linear-gradient(45deg, #ff6b6b, #ee5a24)",
-            border: "none",
-            borderRadius: "25px",
-            padding: "20px 40px",
-            fontSize: "20px",
-            fontWeight: "bold",
-            color: "white",
-            cursor: "pointer",
-            boxShadow: "0 10px 30px rgba(255, 107, 107, 0.4)",
-            transition: "all 0.3s ease",
-          }}
-        >
-          🎨 إنشاء من قالب
-        </button>
+        {[
+          {
+            mode: "templates",
+            icon: "🎨",
+            title: "إنشاء من قالب",
+            subtitle: "أكثر من 18 قالب احترافي",
+            description: "قوالب متنوعة للأعمال والفن والتسويق",
+            gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            shadowColor: "rgba(102, 126, 234, 0.4)",
+          },
+          {
+            mode: "projects",
+            icon: "📁",
+            title: "مشاريعي",
+            subtitle: "إدارة ذكية للمشاريع",
+            description: "احفظ واستكمل مشاريعك بسهولة",
+            gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+            shadowColor: "rgba(240, 147, 251, 0.4)",
+          },
+          {
+            mode: "media",
+            icon: "🎭",
+            title: "معالج الوسائط الذكي",
+            subtitle: "تقنيات الذكاء الاصطناعي",
+            description: "كشف الوجوه وتحليل الألوان وأكثر",
+            gradient: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+            shadowColor: "rgba(79, 172, 254, 0.4)",
+          },
+          {
+            mode: "ai",
+            icon: "🤖",
+            title: "الذكاء الاصطناعي",
+            subtitle: "مساعد ذكي متقدم",
+            description: "اقتراحات ذكية وتحليل متقدم",
+            gradient: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
+            shadowColor: "rgba(250, 112, 154, 0.4)",
+          },
+        ].map((button, index) => (
+          <button
+            key={button.mode}
+            onClick={() => changeMode(button.mode as StudioMode)}
+            style={{
+              background: button.gradient,
+              border: "none",
+              borderRadius: "20px",
+              padding: "30px 25px",
+              color: "white",
+              cursor: "pointer",
+              boxShadow: `0 15px 35px ${button.shadowColor}`,
+              transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+              textAlign: "right",
+              position: "relative",
+              overflow: "hidden",
+              transformStyle: "preserve-3d",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = "translateY(-8px) scale(1.02)";
+              e.currentTarget.style.boxShadow = `0 25px 50px ${button.shadowColor}`;
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = "translateY(0) scale(1)";
+              e.currentTarget.style.boxShadow = `0 15px 35px ${button.shadowColor}`;
+            }}
+          >
+            {/* طبقة تأثير لمعان */}
+            <div
+              style={{
+                position: "absolute",
+                top: 0,
+                left: "-100%",
+                width: "100%",
+                height: "100%",
+                background:
+                  "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+                transition: "left 0.5s",
+              }}
+            />
 
-        <button
-          onClick={() => changeMode("projects")}
-          style={{
-            background: "linear-gradient(45deg, #4ecdc4, #44a08d)",
-            border: "none",
-            borderRadius: "25px",
-            padding: "20px 40px",
-            fontSize: "20px",
-            fontWeight: "bold",
-            color: "white",
-            cursor: "pointer",
-            boxShadow: "0 10px 30px rgba(78, 205, 196, 0.4)",
-            transition: "all 0.3s ease",
-          }}
-        >
-          📁 مشاريعي
-        </button>
+            {/* أيقونة ثلاثية الأبعاد */}
+            <div
+              style={{
+                fontSize: "48px",
+                marginBottom: "15px",
+                filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))",
+                animation: `iconFloat ${3 + index * 0.5}s ease-in-out infinite`,
+              }}
+            >
+              {button.icon}
+            </div>
 
-        <button
-          onClick={() => changeMode("media")}
-          style={{
-            background: "linear-gradient(45deg, #a8edea, #fed6e3)",
-            border: "none",
-            borderRadius: "25px",
-            padding: "20px 40px",
-            fontSize: "20px",
-            fontWeight: "bold",
-            color: "#333",
-            cursor: "pointer",
-            boxShadow: "0 10px 30px rgba(168, 237, 234, 0.4)",
-            transition: "all 0.3s ease",
-          }}
-        >
-          🎭 معالج الوسائط الذكي الحقيقي
-        </button>
+            {/* محتوى النص */}
+            <div>
+              <h3
+                style={{
+                  fontSize: "22px",
+                  fontWeight: "800",
+                  margin: "0 0 8px 0",
+                  textShadow: "0 2px 4px rgba(0,0,0,0.3)",
+                }}
+              >
+                {button.title}
+              </h3>
 
-        <button
-          onClick={() => changeMode("ai")}
+              <p
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "600",
+                  margin: "0 0 8px 0",
+                  opacity: 0.9,
+                }}
+              >
+                {button.subtitle}
+              </p>
+
+              <p
+                style={{
+                  fontSize: "12px",
+                  margin: "0",
+                  opacity: 0.8,
+                  lineHeight: 1.4,
+                }}
+              >
+                {button.description}
+              </p>
+            </div>
+
+            {/* مؤشر الاتجاه */}
+            <div
+              style={{
+                position: "absolute",
+                left: "20px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                fontSize: "24px",
+                opacity: 0.7,
+                transition: "all 0.3s ease",
+              }}
+            >
+              ←
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {/* شريط المعلومات السفلي */}
+      <div
+        style={{
+          marginTop: "60px",
+          padding: "20px 40px",
+          backgroundColor: "rgba(255, 255, 255, 0.1)",
+          borderRadius: "15px",
+          backdropFilter: "blur(10px)",
+          border: "1px solid rgba(255, 255, 255, 0.2)",
+          maxWidth: "800px",
+          width: "100%",
+        }}
+      >
+        <div
           style={{
-            background: "linear-gradient(45deg, #ffecd2, #fcb69f)",
-            border: "none",
-            borderRadius: "25px",
-            padding: "20px 40px",
-            fontSize: "20px",
-            fontWeight: "bold",
-            color: "#333",
-            cursor: "pointer",
-            boxShadow: "0 10px 30px rgba(255, 236, 210, 0.4)",
-            transition: "all 0.3s ease",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontSize: "14px",
+            opacity: 0.9,
           }}
         >
-          🤖 الذكاء الاصطناعي
-        </button>
+          <div>
+            <strong>الإصدار:</strong> 1.0.0 | <strong>آخر تحديث:</strong> ديسمبر
+            2024
+          </div>
+          <div>
+            <strong>مطور بواسطة:</strong> فريق التطوير المتخصص
+          </div>
+        </div>
       </div>
     </div>
   );
