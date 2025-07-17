@@ -9,7 +9,14 @@ export interface VideoTemplate {
     | "artistic"
     | "marketing"
     | "educational"
-    | "celebration";
+    | "celebration"
+    | "medical"
+    | "technology"
+    | "sports"
+    | "travel"
+    | "food"
+    | "real-estate"
+    | "religious";
   duration: number;
   fps: number;
   width: number;
@@ -42,7 +49,7 @@ export const videoTemplates: VideoTemplate[] = [
     id: "artistic-portrait",
     name: "البورتريه الفني",
     description:
-      "قالب فني لعرض الصور الشخصية بطريقة احترافية مع تأثيرات بصرية رائعة",
+      "قالب فني لعرض الصور الشخصية بطريقة احترافية مع تأث��رات بصرية رائعة",
     thumbnail: "/thumbnails/artistic-portrait.jpg",
     category: "artistic",
     tags: ["فني", "صور شخصية", "احترافي", "إبداعي"],
@@ -100,7 +107,7 @@ export const videoTemplates: VideoTemplate[] = [
   {
     id: "social-story",
     name: "قصة اجتماعية",
-    description: "قالب مثالي ��وسائل التواصل الاجتماعي مع تأثيرات جذابة",
+    description: "قالب مثالي لوسائل التواصل الاجتماعي مع تأثيرات جذابة",
     thumbnail: "/thumbnails/social-story.jpg",
     category: "social",
     tags: ["سوشيال ميديا", "قصص", "تفاعلي", "شبابي"],
@@ -312,7 +319,7 @@ export const videoTemplates: VideoTemplate[] = [
       text: {
         title: "الاختراق الطبي الجديد",
         subtitle: "تقنيات جراحية متطورة",
-        description: "دراسة حديثة في عل��ج السرطان باستخدام العلاج المناعي",
+        description: "دراسة حديثة في علاج السرطان باستخدام العلاج المناعي",
       },
       colors: {
         primary: "#0ea5e9",
@@ -347,7 +354,7 @@ export const videoTemplates: VideoTemplate[] = [
       text: {
         title: "مستقبل التقنية",
         subtitle: "حلول ذكية للمشاكل المعقدة",
-        description: "نط��ر تطبيقات الذكاء الاصطناعي لتحسين حياة المجتمع",
+        description: "نطور تطبيقات الذكاء الاصطناعي لتحسين حياة المجتمع",
       },
       colors: {
         primary: "#6366f1",
@@ -408,7 +415,8 @@ export const videoTemplates: VideoTemplate[] = [
   {
     id: "real-estate-luxury",
     name: "العقارات الفاخرة",
-    description: "قالب أنيق لعرض العقارات الفاخرة والمشاريع العمرانية المتميزة",
+    description:
+      "قالب أنيق لعرض العقارات الفاخرة والمشاريع العمرانية المتمي��ة",
     thumbnail: "/thumbnails/real-estate.jpg",
     category: "business",
     tags: ["عقارات", "فلل", "استثمار", "نيوم", "القدية"],
@@ -420,7 +428,7 @@ export const videoTemplates: VideoTemplate[] = [
     customizableProps: {
       text: {
         title: "قصر الأحلام",
-        subtitle: "الفخامة تلتقي بالح��اثة",
+        subtitle: "الفخامة تلتقي بالحداثة",
         description: "فيلا استثنائية في قلب الرياض الجديدة مع إطلالة خلابة",
       },
       colors: {
@@ -446,7 +454,7 @@ export const videoTemplates: VideoTemplate[] = [
   {
     id: "cooking-recipe",
     name: "وصفة الطبخ",
-    description: "قالب شهي لعرض وصفات الطبخ التراثية والحديثة بطريقة جذابة",
+    description: "قالب ��هي لعرض وصفات الطبخ التراثية والحديثة بطريقة جذابة",
     thumbnail: "/thumbnails/cooking.jpg",
     category: "social",
     tags: ["طبخ", "وصفات", "مطبخ عربي", "حلويات", "أكل صحي"],
@@ -554,7 +562,7 @@ export const videoTemplates: VideoTemplate[] = [
         city: "الرياض",
         weddingTheme: "التراث النجدي الأصيل",
         guestCount: "500 مدعو",
-        blessing: "بارك الله لهما وبارك عليهما وجمع بينهما في خير",
+        blessing: "بارك الله لهما وبار�� عليهما وجمع بينهما في خير",
       },
     },
   },
@@ -591,7 +599,7 @@ export const videoTemplates: VideoTemplate[] = [
         batch: "دفعة الأمل 2024",
         graduateCount: "320 خريج وخريجة",
         valedictorian: "الطالبة زهراء أحمد الناصر",
-        ceremony: "مسرح الملك فيصل للمؤتمرات",
+        ceremony: "مسرح الملك ف��صل للمؤتمرات",
         date: "الثلاثاء 20 يونيو 2024",
         motto: "العلم نور والجهل ظلام",
       },
@@ -637,7 +645,7 @@ export const videoTemplates: VideoTemplate[] = [
   {
     id: "corporate-report",
     name: "التقرير السنوي",
-    description: "قالب مؤسسي محترف لعرض التقارير السنوية والإنج��زات المؤسسية",
+    description: "قالب مؤسسي محترف لعرض التقارير السنوية والإنجازات المؤسسية",
     thumbnail: "/thumbnails/corporate.jpg",
     category: "business",
     tags: ["تقرير", "شركة", "إحصائيات", "أرباح", "نمو"],
