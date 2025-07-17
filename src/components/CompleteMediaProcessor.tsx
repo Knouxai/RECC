@@ -642,7 +642,7 @@ export const CompleteMediaProcessor: React.FC = () => {
                     <div className="tool-icon">👤</div>
                     <div className="tool-content">
                       <h4>معالجة الوجه التلقائية</h4>
-                      <p>تحسين وتجميل الوجه بتقنيات الذكاء الاصطناعي</p>
+                      <p>تحسي�� وتجميل الوجه بتقنيات الذكاء الاصطناعي</p>
                     </div>
                   </button>
 
@@ -866,7 +866,7 @@ export const CompleteMediaProcessor: React.FC = () => {
       </div>
 
       {/* Styles */}
-      <style jsx>{`
+      <style>{`
         .app-header {
           position: fixed;
           top: 0;
