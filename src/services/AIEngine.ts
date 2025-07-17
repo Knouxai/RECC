@@ -159,7 +159,7 @@ export class AIEngine {
       suggestions.push({
         id: "timing_optimization_" + Date.now(),
         type: "timing",
-        title: "تحسين توقيت العناصر للحصول على أقصى تأثير",
+        title: "تحسين توقيت العناصر للحصول على أقصى تأثي��",
         description: `تحسين توقيت ظهور العناصر يمكن أن يزيد الاهتمام بنسبة ${timingAnalysis.improvementPercentage}%`,
         confidence: 0.85,
         action: () => this.optimizeTiming(project, timingAnalysis.suggestions),
@@ -230,7 +230,7 @@ export class AIEngine {
         id: "smart_template_" + Date.now(),
         type: "template",
         title: "قوالب ذكية مقترحة بناءً على تحليل المحتوى",
-        description: `عثرنا على ${smartTemplates.length} قالب يناسب محتواك بشكل مثالي ويحسن من جودة العرض`,
+                description: "عثرنا على قوالب تناسب محتواك بشكل مثالي وتحسن من جودة العرض",
         confidence: 0.65,
                 action: () => this.showAlternativeTemplates(smartTemplates),
         category: "creative",
@@ -357,9 +357,9 @@ export class AIEngine {
       title: [
         "اكتشف {subject} الرائع",
         "{subject} - رحلة مذهلة",
-        "تعرف على {subject} بطري��ة جديدة",
+        "تعرف على {subject} بطريقة جديدة",
         "{subject}: قصة نجاح ملهمة",
-        "عالم {subject} المدهش",
+        "عالم {subject} المده��",
       ],
       description: [
         "انضم إلينا في رحلة استكشاف {subject} وتعرف على أسراره المدهشة.",
@@ -396,7 +396,7 @@ export class AIEngine {
       "الحركات السلسة والطبيعية",
       "الخطوط العربية الحديثة",
       "التصميم المسطح مع ظلال خفيفة",
-      "الفيديوهات ��لقصيرة عالية التأثير",
+      "الفيديوهات القصيرة عالية التأثير",
     ];
 
     // تحليل ذكي للاتجاهات بناءً على المشروع
