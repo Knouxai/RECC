@@ -215,8 +215,8 @@ export class AIEngine {
       suggestions.push({
         id: "audio_enhancement_" + Date.now(),
         type: "audio",
-        title: "إضافة الموسيقى وال��ؤثرات الصوتية المناسبة",
-        description: `بناءً على مزاج المحتوى، نقترح ${audioSuggestions.recommendations.length} مقطع صوتي يناسب الطابع العام`,
+        title: "إضافة الموسيقى والمؤثرات الصوتية المناسبة",
+                description: "بناء على مزاج المحتوى، نقترح مقاطع صوتية تناسب الطابع العام للمشروع",
         confidence: 0.82,
         action: () => this.addAudioElements(project, audioSuggestions),
         category: "creative",
@@ -357,7 +357,7 @@ export class AIEngine {
       title: [
         "اكتشف {subject} الرائع",
         "{subject} - رحلة مذهلة",
-        "تعرف على {subject} بطريقة جديدة",
+        "تعرف على {subject} بطري��ة جديدة",
         "{subject}: قصة نجاح ملهمة",
         "عالم {subject} المدهش",
       ],
@@ -396,7 +396,7 @@ export class AIEngine {
       "الحركات السلسة والطبيعية",
       "الخطوط العربية الحديثة",
       "التصميم المسطح مع ظلال خفيفة",
-      "الفيديوهات القصيرة عالية التأثير",
+      "الفيديوهات ��لقصيرة عالية التأثير",
     ];
 
     // تحليل ذكي للاتجاهات بناءً على المشروع
