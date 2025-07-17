@@ -68,7 +68,7 @@ export const StudioInterface: React.FC = () => {
         notifications: [...prev.notifications, notification],
       }));
 
-      // إزالة الإشعار بعد 5 ثوانِ
+      // إزالة الإشعار ��عد 5 ثوانِ
       setTimeout(() => {
         setState((prev) => ({
           ...prev,
@@ -186,47 +186,146 @@ export const StudioInterface: React.FC = () => {
         alignItems: "center",
         justifyContent: "center",
         height: "100%",
-        background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        background:
+          "linear-gradient(135deg, #0f0f23 0%, #1a1a3e 25%, #2d2d5f 50%, #4a4a7a 75%, #667eea 100%)",
         color: "white",
         textAlign: "center",
         direction: "rtl",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
+      {/* خلفية جسيمات متحركة */}
       <div
         style={{
-          fontSize: 120,
-          marginBottom: "30px",
-          animation: "bounce 2s infinite",
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          opacity: 0.1,
+        }}
+      >
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              width: `${Math.random() * 4 + 1}px`,
+              height: `${Math.random() * 4 + 1}px`,
+              backgroundColor: "#60a5fa",
+              borderRadius: "50%",
+              animation: `float ${Math.random() * 10 + 5}s infinite ease-in-out`,
+              animationDelay: `${Math.random() * 5}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* شعار ثلاثي الأبعاد */}
+      <div
+        style={{
+          fontSize: 140,
+          marginBottom: "40px",
+          animation: "bounce 3s infinite ease-in-out",
+          filter: "drop-shadow(0 20px 40px rgba(59, 130, 246, 0.6))",
+          textShadow: "0 0 50px rgba(59, 130, 246, 0.8)",
+          transform: `scale(${pulse})`,
         }}
       >
         🎬
       </div>
 
+      {/* العنوان الرئيسي مع تأثيرات متقدمة */}
       <h1
         style={{
-          fontSize: 64,
-          fontWeight: "bold",
-          marginBottom: "20px",
-          background: "linear-gradient(45deg, #fff, #f0f0f0)",
+          fontSize: 72,
+          fontWeight: "900",
+          marginBottom: "30px",
+          background:
+            "linear-gradient(45deg, #60a5fa, #a78bfa, #f472b6, #fb7185)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
+          backgroundSize: "400% 400%",
+          animation: "gradientShift 4s ease infinite",
+          textShadow: "0 4px 20px rgba(96, 165, 250, 0.5)",
+          letterSpacing: "2px",
         }}
       >
-        استوديو الإبداع الذكي
+        المعالج الذكي للوسائط
       </h1>
 
-      <p
+      {/* وصف تفاعلي مع إحصائيات */}
+      <div
         style={{
-          fontSize: 24,
+          maxWidth: "900px",
           marginBottom: "50px",
-          opacity: 0.9,
-          maxWidth: "800px",
         }}
       >
-        منصة شاملة لإنتاج الفيديوهات بالذكاء الاصطناعي
-        <br />
-        مع معالجة متقدمة للصور والفيديو
-      </p>
+        <p
+          style={{
+            fontSize: 28,
+            marginBottom: "30px",
+            opacity: 0.95,
+            lineHeight: 1.6,
+            fontWeight: "300",
+          }}
+        >
+          منصة شاملة مدعومة بالذكاء الاصطناعي لإنتاج الفيديوهات
+          <br />
+          <span style={{ color: "#60a5fa", fontWeight: "600" }}>
+            مع معالجة متقدمة للصور والفيديو بتقنيات عالمية
+          </span>
+        </p>
+
+        {/* إحصائيات مثيرة للإعجاب */}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "40px",
+            marginBottom: "40px",
+            flexWrap: "wrap",
+          }}
+        >
+          {[
+            { icon: "🎨", number: "18", label: "قالب إبداعي" },
+            { icon: "🤖", number: "5", label: "نموذج ذكاء اصطناعي" },
+            { icon: "⚡", number: "< 30", label: "ثانية معالجة" },
+            { icon: "🎯", number: "94%", label: "دقة التحليل" },
+          ].map((stat, index) => (
+            <div
+              key={index}
+              style={{
+                textAlign: "center",
+                padding: "20px",
+                backgroundColor: "rgba(255, 255, 255, 0.1)",
+                borderRadius: "15px",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                minWidth: "120px",
+                transition: "all 0.3s ease",
+              }}
+            >
+              <div style={{ fontSize: "24px", marginBottom: "8px" }}>
+                {stat.icon}
+              </div>
+              <div
+                style={{
+                  fontSize: "24px",
+                  fontWeight: "800",
+                  color: "#60a5fa",
+                }}
+              >
+                {stat.number}
+              </div>
+              <div style={{ fontSize: "12px", opacity: 0.8 }}>{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <div
         style={{
