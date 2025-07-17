@@ -233,7 +233,7 @@ export const StudioInterface: React.FC = () => {
           animation: "bounce 3s infinite ease-in-out",
           filter: "drop-shadow(0 20px 40px rgba(59, 130, 246, 0.6))",
           textShadow: "0 0 50px rgba(59, 130, 246, 0.8)",
-          transform: `scale(${pulse})`,
+          transform: `scale(${Math.sin(frame / 15) * 0.1 + 1})`,
         }}
       >
         🎬
@@ -1033,7 +1033,7 @@ export const StudioInterface: React.FC = () => {
                 textAlign: "right",
               }}
             >
-              🎭 اقتراح تأثيرات بصر��ة
+              🎭 اقتراح تأثيرات بصرية
             </button>
 
             <button
