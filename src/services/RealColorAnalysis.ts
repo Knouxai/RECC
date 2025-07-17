@@ -201,7 +201,7 @@ export class RealColorAnalysisService {
     }
   }
 
-  // تحليل تفصيلي للألوان (يدوي)
+  // تحليل تفصيلي لل��لوان (يدوي)
   private async performDetailedColorAnalysis(
     image: HTMLImageElement,
   ): Promise<ColorAnalysisResult["statistics"]> {
@@ -599,11 +599,17 @@ export class RealColorAnalysisService {
     });
   }
 
-  // إنشاء اقتراحات ألوان ذكية
+  // إنشاء اقتراحات ألوان ذكية مخصصة للثقافة العربية
   async generateSmartColorSuggestions(
     baseColor: string,
     purpose: "web" | "print" | "brand" | "artistic",
   ): Promise<ColorSuggestion[]> {
+    console.log("🧠 تحليل اللون الأساسي وإنشاء اقتراحات ذكية...");
+    console.log("🎨 مراعاة التفضيلات الثقافية للمنطقة العربية...");
+    console.log("📊 تطبيق أحدث اتجاهات التصميم لعام 2024...");
+
+    // إضافة التحليل الثقافي للألوان
+    const culturalContext = this.analyzeCulturalColorContext(baseColor);
     const rgb = this.hexToRgb(baseColor);
     if (!rgb) return [];
 
