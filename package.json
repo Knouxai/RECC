@@ -3,6 +3,7 @@
   "productName": "المعالج الذكي للوسائط",
   "version": "1.0.0",
   "description": "تطبيق متقدم لمعالجة الصور والفيديوهات بالذكاء الاصطناعي",
+  "type": "module",
   "main": "public/electron.js",
   "author": {
     "name": "فريق التطوير",
@@ -105,7 +106,7 @@
       "installerHeaderIcon": "public/icon.ico",
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "المعالج الذكي للوسائط",
+      "shortcutName": "المعالج الذكي للوسائ��",
       "include": "build/installer.nsh",
       "language": "1025",
       "deleteAppDataOnUninstall": false,
