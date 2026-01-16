@@ -1,0 +1,19 @@
+{
+  "name": "smart-media-processor-desktop",
+  "productName": "المعالج الذكي للوسائط",
+  "version": "1.0.0",
+  "description": "تطبيق سطح مكتب متقدم لمعالجة الصور والفيديوهات بالذكاء الاصطناعي",
+  "main": "public/electron.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev"
+  },
+  "dependencies": {
+    "electron": "^37.2.1",
+    "electron-is-dev": "^3.0.1"
+  },
+  "devDependencies": {},
+  "keywords": ["electron", "desktop", "media", "processor", "arabic"],
+  "author": "Development Team",
+  "license": "UNLICENSED"
+}

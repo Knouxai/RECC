@@ -1,6 +1,7 @@
-const { app, BrowserWindow, Menu, shell, dialog } = require("electron");
+const { app, BrowserWindow, Menu, shell, dialog, ipcMain } = require("electron");
 const path = require("path");
 const isDev = require("electron-is-dev");
+const { spawn } = require("child_process");
 
 // الاحتفاظ بمرجع النافذة الرئيسية
 let mainWindow;
@@ -378,6 +379,52 @@ if (!gotTheLock) {
 // تعامل مع الأخطاء
 process.on("uncaughtException", (error) => {
   console.error("خطأ غير معالج:", error);
+});
+
+// Handle folder analysis request
+ipcMain.handle('analyze-folder', async (event, folderPath) => {
+  return new Promise((resolve, reject) => {
+    // Spawn a worker process to analyze the folder
+    const worker = spawn(process.execPath, [
+      path.join(__dirname, '../src/folder-analyzer-worker.js'),
+      folderPath
+    ]);
+
+    let result = '';
+    
+    worker.stdout.on('data', (data) => {
+      console.log(`[Worker] ${data}`);
+      // Send progress updates to renderer
+      event.sender.send('analysis-progress', data.toString());
+    });
+
+    worker.stderr.on('data', (data) => {
+      console.error(`[Worker Error] ${data}`);
+    });
+
+    worker.on('close', (code) => {
+      if (code === 0) {
+        resolve(result);
+      } else {
+        reject(new Error(`Worker exited with code ${code}`));
+      }
+    });
+
+    // Send initial message
+    event.sender.send('analysis-progress', '[Worker] Starting analysis...');
+  });
+});
+
+// Handle open folder dialog
+ipcMain.handle('open-folder-dialog', async () => {
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ['openDirectory']
+  });
+  
+  if (!result.canceled && result.filePaths.length > 0) {
+    return result.filePaths[0];
+  }
+  return null;
 });
 
 // منع حفظ حالة النافذة
