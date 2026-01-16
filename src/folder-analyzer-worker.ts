@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+const fs = require('fs');
+const path = require('path');
 
 // Simulate folder analysis
 async function analyzeFolder(folderPath: string): Promise<void> {

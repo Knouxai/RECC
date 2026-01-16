@@ -1,142 +1,17 @@
 {
-  "name": "smart-media-processor",
-  "productName": "المعالج الذكي للوسائط",
+  "name": "folder-analyzer",
   "version": "1.0.0",
-  "description": "تطبيق متقدم لمعالجة الصور والفيديوهات بالذكاء الاصطناعي",
-  "type": "module",
+  "description": "Folder Analyzer Desktop Application",
   "main": "public/electron.js",
-  "author": "فريق التطوير <knouxio@zohomail.com>",
-  "repository": {},
-  "license": "UNLICENSED",
-  "private": true,
-  "packageManager": "pnpm@10.10.0",
+  "scripts": {
+    "start": "electron . --no-sandbox",
+    "dev": "electron . --no-sandbox --dev"
+  },
   "dependencies": {
-    "@remotion/animated-emoji": "4.0.323",
-    "@remotion/animation-utils": "4.0.323",
-    "@remotion/cli": "^4.0.314",
-    "@remotion/cloudrun": "4.0.323",
-    "@remotion/enable-scss": "4.0.323",
-    "@remotion/fonts": "4.0.323",
-    "@remotion/gif": "4.0.323",
-    "@remotion/google-fonts": "4.0.323",
-    "@remotion/install-whisper-cpp": "4.0.323",
-    "@remotion/paths": "4.0.323",
-    "@remotion/player": "4.0.323",
-    "@remotion/tailwind-v4": "^4.0.314",
-    "@remotion/zod-types": "^4.0.314",
-    "@tensorflow/tfjs": "^4.15.0",
-    "@tensorflow/tfjs-backend-webgl": "^4.15.0",
-    "colorthief": "^2.4.0",
-    "face-api.js": "^0.22.2",
-    "jimp": "^0.22.10",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
-    "remotion": "^4.0.314",
-    "tailwindcss": "^4.1.10",
-    "zod": "3.22.3"
+    "electron": "^37.2.1"
   },
   "devDependencies": {
-    "@remotion/eslint-config-flat": "^4.0.314",
-    "@types/react": "19.0.0",
-    "@types/web": "0.0.166",
-    "concurrently": "^9.2.0",
-    "cross-env": "^7.0.3",
     "electron": "^37.2.1",
-    "electron-builder": "^26.0.12",
-    "electron-is-dev": "^3.0.1",
-    "eslint": "9.19.0",
-    "prettier": "3.3.3",
-    "typescript": "5.5.4",
-    "wait-on": "^8.0.3"
-  },
-  "scripts": {
-    "dev": "remotion studio",
-    "web-build": "remotion bundle --out-dir ./dist",
-    "electron-dev": "concurrently \"pnpm dev\" \"wait-on http://localhost:3000 && electron .\"",
-    "electron-pack": "electron-builder",
-    "electron-dist": "pnpm web-build && electron-builder",
-    "build": "pnpm web-build",
-    "dist": "pnpm electron-dist",
-    "build-app": "node scripts/build-app.js",
-    "package-exe": "pnpm build-app",
-    "upgrade": "remotion upgrade",
-    "lint": "eslint src && tsc"
-  },
-  "sideEffects": [
-    "*.css"
-  ],
-  "build": {
-    "appId": "com.smartmedia.processor",
-    "productName": "المعالج الذكي للوسائط",
-    "directories": {
-      "buildResources": "build",
-      "output": "release"
-    },
-    "files": [
-      "dist/**/*",
-      "node_modules/**/*",
-      "public/electron.js",
-      "public/icon.png"
-    ],
-    "extraMetadata": {
-      "main": "public/electron.js"
-    },
-    "win": {
-      "target": [
-        {
-          "target": "nsis",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        }
-      ],
-      "icon": "public/icon.ico",
-      "requestedExecutionLevel": "asInvoker",
-      "artifactName": "${productName}-Setup-${version}.${ext}"
-    },
-    "nsis": {
-      "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "installerIcon": "public/icon.ico",
-      "uninstallerIcon": "public/icon.ico",
-      "installerHeaderIcon": "public/icon.ico",
-      "createDesktopShortcut": true,
-      "createStartMenuShortcut": true,
-      "shortcutName": "المعالج الذكي للوسائ��",
-      "include": "build/installer.nsh",
-      "language": "1025",
-      "deleteAppDataOnUninstall": false,
-      "runAfterFinish": true,
-      "menuCategory": true,
-      "displayLanguageSelector": false
-    },
-    "mac": {
-      "target": [
-        {
-          "target": "dmg",
-          "arch": [
-            "x64",
-            "arm64"
-          ]
-        }
-      ],
-      "icon": "public/icon.icns",
-      "category": "public.app-category.graphics-design"
-    },
-    "linux": {
-      "target": [
-        {
-          "target": "AppImage",
-          "arch": [
-            "x64"
-          ]
-        }
-      ],
-      "icon": "public/icon.png",
-      "category": "Graphics"
-    },
-    "publish": null
-  },
-  "keywords": []
+    "typescript": "^5.9.3"
+  }
 }
