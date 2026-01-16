@@ -5,10 +5,7 @@
   "description": "تطبيق متقدم لمعالجة الصور والفيديوهات بالذكاء الاصطناعي",
   "type": "module",
   "main": "public/electron.js",
-  "author": {
-    "name": "فريق التطوير",
-    "email": "knouxio@zohomail.com"
-  },
+  "author": "فريق التطوير <knouxio@zohomail.com>",
   "repository": {},
   "license": "UNLICENSED",
   "private": true,
@@ -140,5 +137,6 @@
       "category": "Graphics"
     },
     "publish": null
-  }
+  },
+  "keywords": []
 }

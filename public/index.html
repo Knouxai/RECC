@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المعالج الذكي للوسائط - Smart Media Processor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3a8a, #1e40af, #3b82f6);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #60a5fa, #818cf8, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .subtitle {
+            text-align: center;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #3b82f6, #6366f1);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .progress-container {
+            margin: 20px 0;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #60a5fa, #8b5cf6);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .logs {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+            white-space: pre-wrap;
+            margin-top: 20px;
+        }
+        
+        .status-item {
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        
+        .status-info { background: rgba(59, 130, 246, 0.2); }
+        .status-success { background: rgba(16, 185, 129, 0.2); }
+        .status-warning { background: rgba(245, 158, 11, 0.2); }
+        .status-error { background: rgba(239, 68, 68, 0.2); }
+        
+        .results {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(34, 197, 94, 0.1);
+            border-radius: 8px;
+        }
+        
+        .file-tree {
+            margin-top: 15px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .file-item {
+            padding: 5px;
+            margin: 2px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #60a5fa;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 المعالج الذكي للوسائط</h1>
+        <p class="subtitle">نظام تحليل وتحليل الملفات المتقدم</p>
+        
+        <div class="controls">
+            <button id="selectFolderBtn">اختر مجلد للتحليل</button>
+            <button id="startAnalysisBtn" disabled>ابدأ التحليل</button>
+            <button id="stopAnalysisBtn" disabled>إيقاف</button>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-text" id="progressText">جاهز للتحليل...</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+        
+        <div class="stats-grid" id="statsGrid" style="display: none;">
+            <div class="stat-card">
+                <div class="stat-value" id="totalFiles">0</div>
+                <div class="stat-label">إجمالي الملفات</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalSize">0 MB</div>
+                <div class="stat-label">الحجم الكلي</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="mediaFiles">0</div>
+                <div class="stat-label">الوسائط</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="elapsedTime">0s</div>
+                <div class="stat-label">الوقت المستغرق</div>
+            </div>
+        </div>
+        
+        <div class="results" id="resultsSection" style="display: none;">
+            <h3>نتائج التحليل</h3>
+            <div class="file-tree" id="fileTree"></div>
+        </div>
+        
+        <div class="logs" id="logsContainer">
+            [UI] تم تحميل النظام بنجاح
+            [UI] جاهز لبدء التحليل...
+        </div>
+    </div>
+
+    <script>
+        // Add log message
+        function addLog(message, type = 'info') {
+            const logsContainer = document.getElementById('logsContainer');
+            const logItem = document.createElement('div');
+            logItem.className = `status-item status-${type}`;
+            logItem.textContent = message;
+            logsContainer.appendChild(logItem);
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+            
+            // Print to console as well
+            console.log(message);
+        }
+        
+        // Update progress
+        function updateProgress(percent, text) {
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            
+            progressFill.style.width = percent + '%';
+            progressText.textContent = text || `تقدم: ${percent}%`;
+        }
+        
+        // Update stats
+        function updateStats(stats) {
+            document.getElementById('totalFiles').textContent = stats.totalFiles || 0;
+            document.getElementById('totalSize').textContent = stats.totalSize ? (stats.totalSize / (1024 * 1024)).toFixed(2) + ' MB' : '0 MB';
+            document.getElementById('mediaFiles').textContent = stats.mediaFiles ? stats.mediaFiles.length : 0;
+            document.getElementById('elapsedTime').textContent = stats.elapsedTime ? Math.round(stats.elapsedTime / 1000) + 's' : '0s';
+            document.getElementById('statsGrid').style.display = 'grid';
+        }
+        
+        // Display file tree
+        function displayFileTree(mediaFiles = []) {
+            const fileTree = document.getElementById('fileTree');
+            fileTree.innerHTML = '';
+            
+            if (mediaFiles.length === 0) {
+                fileTree.textContent = 'لا توجد ملفات وسائط';
+                return;
+            }
+            
+            mediaFiles.slice(0, 20).forEach(filePath => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.textContent = filePath.split('/').pop() || filePath.split('\\\\').pop() || filePath;
+                fileTree.appendChild(fileItem);
+            });
+            
+            if (mediaFiles.length > 20) {
+                const moreItem = document.createElement('div');
+                moreItem.className = 'file-item';
+                moreItem.textContent = `... و ${mediaFiles.length - 20} ملفًا آخر`;
+                fileTree.appendChild(moreItem);
+            }
+            
+            document.getElementById('resultsSection').style.display = 'block';
+        }
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            addLog('[UI] واجهة المستخدم جاهزة');
+            
+            const selectFolderBtn = document.getElementById('selectFolderBtn');
+            const startAnalysisBtn = document.getElementById('startAnalysisBtn');
+            const stopAnalysisBtn = document.getElementById('stopAnalysisBtn');
+            
+            let selectedFolder = null;
+            let analysisActive = false;
+            
+            // Select folder button
+            selectFolderBtn.addEventListener('click', async () => {
+                try {
+                    addLog('[UI] جاري فتح مربع حوار المجلد...', 'info');
+                    
+                    if (window.electronAPI) {
+                        // Use real Electron API to open folder dialog
+                        selectedFolder = await window.electronAPI.openFolderDialog();
+                        if (selectedFolder) {
+                            addLog(`[UI] تم تحديد المجلد: ${selectedFolder}`, 'success');
+                            startAnalysisBtn.disabled = false;
+                        } else {
+                            addLog('[UI] لم يتم تحديد مجلد', 'warning');
+                        }
+                    } else {
+                        // Fallback for web browser testing
+                        selectedFolder = '/home/user/documents';
+                        addLog(`[UI] (تجريبي) تم تحديد المجلد: ${selectedFolder}`, 'warning');
+                        startAnalysisBtn.disabled = false;
+                    }
+                } catch (error) {
+                    addLog(`[UI] خطأ في تحديد المجلد: ${error.message}`, 'error');
+                }
+            });
+            
+            // Start analysis button
+            startAnalysisBtn.addEventListener('click', async () => {
+                if (!selectedFolder) {
+                    addLog('[UI] يرجى تحديد مجلد أولاً', 'warning');
+                    return;
+                }
+                
+                if (analysisActive) return;
+                
+                analysisActive = true;
+                startAnalysisBtn.disabled = true;
+                stopAnalysisBtn.disabled = false;
+                
+                addLog('[UI] بدء تحليل المجلد...', 'info');
+                
+                try {
+                    if (window.electronAPI) {
+                        // Use real Electron API for analysis
+                        addLog('[UI] جاري بدء عملية التحليل في الخلفية...', 'info');
+                        await window.electronAPI.analyzeFolder(selectedFolder);
+                    } else {
+                        // Fallback for web browser testing
+                        simulateAnalysis(selectedFolder);
+                    }
+                } catch (error) {
+                    addLog(`[UI] خطأ في بدء التحليل: ${error.message}`, 'error');
+                    analysisActive = false;
+                    startAnalysisBtn.disabled = false;
+                    stopAnalysisBtn.disabled = true;
+                }
+            });
+            
+            // Stop analysis button
+            stopAnalysisBtn.addEventListener('click', () => {
+                addLog('[UI] تم إيقاف التحليل', 'warning');
+                analysisActive = false;
+                startAnalysisBtn.disabled = false;
+                stopAnalysisBtn.disabled = true;
+                updateProgress(0, 'تم الإيقاف');
+            });
+            
+            // Simulate analysis process (for demo purposes)
+            function simulateAnalysis(folderPath) {
+                addLog(`[Worker] Starting analysis of: ${folderPath}`, 'info');
+                
+                let progress = 0;
+                const interval = setInterval(() => {
+                    if (!analysisActive) {
+                        clearInterval(interval);
+                        return;
+                    }
+                    
+                    progress += Math.random() * 10;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                        
+                        // Simulate results
+                        const results = {
+                            totalFiles: Math.floor(Math.random() * 500) + 50,
+                            totalSize: Math.floor(Math.random() * 1000000000),
+                            mediaFiles: Array.from({length: Math.floor(Math.random() * 50)}, (_, i) => 
+                                `/sample/media/file_${i+1}.mp4`
+                            ),
+                            elapsedTime: Math.floor(Math.random() * 30000) + 5000
+                        };
+                        
+                        addLog('[Worker] Analysis completed', 'success');
+                        addLog('[UI] Analysis results received', 'success');
+                        updateStats(results);
+                        displayFileTree(results.mediaFiles);
+                        
+                        analysisActive = false;
+                        startAnalysisBtn.disabled = false;
+                        stopAnalysisBtn.disabled = true;
+                    }
+                    
+                    updateProgress(Math.floor(progress), `تحليل الملفات... ${Math.floor(progress)}%`);
+                    addLog(`[Worker] Progress: ${Math.floor(progress)}%`);
+                }, 500);
+            }
+            
+            // Listen for real analysis progress (in a real app)
+            if (window.electronAPI) {
+                window.electronAPI.onAnalysisProgress((progress) => {
+                    addLog(`[Real Worker] ${progress.trim()}`, 'info');
+                    
+                    // Parse progress for updates
+                    if (progress.includes('Progress:')) {
+                        const match = progress.match(/Progress: (\d+)%/);
+                        if (match) {
+                            const percent = parseInt(match[1]);
+                            updateProgress(percent, progress.trim());
+                        }
+                    }
+                    
+                    if (progress.includes('Completed analysis')) {
+                        // Reset buttons
+                        analysisActive = false;
+                        startAnalysisBtn.disabled = false;
+                        stopAnalysisBtn.disabled = true;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
